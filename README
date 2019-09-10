@@ -1,2 +1,93 @@
-In this folder you can find the code used to produce the Data explorer for ISD’s publication on Psychiatric Inpatient Activity.
-Link to the explorer: https://www.isdscotland.org/Health-Topics/Mental-Health/Publications/2018-09-25/psychiatric-inpatient-activity/data-explorer/
+In this folder you can find the code used to produce the Data explorer for ISD’s publication on Mental Health Inpatient Activity.
+Link to the explorer: https://www.isdscotland.org/Health-Topics/Mental-Health/Publications/2019-09-10/mental-health-inpatient-activity/data-explorer/
+
+You can download the basefiles that were used to create the Data explorer from the following link: https://www.isdscotland.org/Health-Topics/Mental-Health/Publications/2019-09-10/mental-health-inpatient-activity/data-files/ 
+
+Finally, below you can find information about the version of R and the versions of different packages that the Mental Health team used to create the Data explorer:
+
+R version 3.5.1 (2018-07-02)
+Platform: i386-w64-mingw32/i386 (32-bit)
+Running under: Windows 7 (build 7601) Service Pack 1
+
+Matrix products: default
+
+locale:
+LC_COLLATE=English_United Kingdom.1252  
+LC_CTYPE=English_United Kingdom.1252    
+LC_MONETARY=English_United Kingdom.1252 
+LC_NUMERIC=C                           
+LC_TIME=English_United Kingdom.1252    
+
+attached base packages:
+stats     
+graphics  
+grDevices 
+utils     
+datasets  
+methods   
+base     
+
+other attached packages:
+stringr_1.4.0      
+rmapshaper_0.4.1   
+magrittr_1.5       
+rgdal_1.3-6        
+sp_1.3-1           
+leaflet_2.0.2      
+shinyWidgets_0.4.3 
+googleVis_0.6.2 
+RColorBrewer_1.1-2 
+forcats_0.3.0      
+readr_1.1.1        
+DT_0.4             
+plotly_4.8.0       
+ggplot2_3.1.0      
+dplyr_0.7.8        
+shiny_1.1.0       
+
+loaded via a namespace (and not attached):
+withr_2.1.2        
+promises_1.0.1     
+tidyselect_0.2.5   
+lattice_0.20-35    
+pkgconfig_2.0.2    
+compiler_3.5.1     
+htmlwidgets_1.3    
+jsonvalidate_1.0.0
+xtable_1.8-3       
+viridisLite_0.3.0  
+Rcpp_0.12.19       
+plyr_1.8.4         
+httr_1.3.1         
+tools_3.5.1        
+R6_2.3.0           
+bindrcpp_0.2.2    
+bindr_0.1.1        
+purrr_0.2.5        
+crosstalk_1.0.0    
+scales_1.0.0       
+geojsonlint_0.2.0  
+curl_3.2           
+assertthat_0.2.0   
+digest_0.6.18     
+gtable_0.2.0       
+mime_0.6           
+V8_1.5             
+stringi_1.2.4      
+htmltools_0.3.6    
+hms_0.4.2          
+munsell_0.5.0      
+grid_3.5.1        
+colorspace_1.3-2   
+data.table_1.11.8  
+glue_1.3.0         
+httpuv_1.5.1       
+rlang_0.3.0.1      
+lazyeval_0.2.1     
+crayon_1.3.4       
+later_0.8.0       
+tidyr_0.8.2        
+pillar_1.3.0       
+codetools_0.2-15   
+jsonlite_1.5       
+tibble_1.4.2
