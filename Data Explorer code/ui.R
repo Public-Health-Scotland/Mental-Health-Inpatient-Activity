@@ -1,116 +1,81 @@
 #Name: Data explorer
 #Author: Nikos Alexandrou
-#Modified: 05/09/2019
+#Modified: 12/11/2020
 #Type: Data visualisation
 #Written on: RStudio
-#Written for: R version 3.5.1 
+#Written for: R version 3.6.1 
 #Output: Shiny application
 #Approximate run time: < 1 minute
 #Description: This syntax creates a Shiny application that allows the... 
 #user to visualise mental health data in a variety of ways.
 
+### SECTION 3: USER INTERFACE ----
+
+
 #Moving on to the User Interface (UI) side of things.
 
-### 1 ---
-
 #Create the fluidPage that will house the data explorer.
-
 fluidPage(
-  
-  ### 2 ---
-  
-  #The following command forces R to display the desktop version of the app,...
-  #no matter what device the user has (mobile phone, tablet, desktop, etc).
-  #This is a temporary solution until we develop a Shiny app that's...
-  #optimised for mobile devices.
-  
-  HTML('<meta name="viewport" content="width=1200">'),
-  
   style = "width: 100%; height: 100%; max-width: 1200px;", 
   tags$head( 
     tags$style(
       type = "text/css",
       
-      ### 3 ---
-      
       #Prevent error messages from popping up on the interface.
-      
       ".shiny-output-error { visibility: hidden; }", 
       ".shiny-output-error:before { visibility: hidden; }"
       
     ),
-    
-    ### 4 ---
     
     #The following chunk of code does three things:
     # 1. Paints the ribbon that contains the tab headers white.
     # 2. Highlights the header of the active tab in blue.
     # 3. Sets the font size for the sentence that appears above the...
     #cross-boundary flow diagram.
-    
     tags$style(HTML(".tabbable > .nav > li > a { 
                     color: #000000; 
                     }
-                    
                     .tabbable > .nav > li[class = active] > a {
                     color: #FFFFFF;
                     background-color: #0072B2;
                     }
-                    
                     #flow_text {
                     font-size: 15px;
                     }"))
-    
   ),
-  
-  ### 5 ---
   
   #The following line of code sets the properties of the horizontal lines...
   #we will be inserting below as page breaks.
-  
   tags$head(tags$style(HTML("hr { border: 1px solid #000000; }"))),
-  
-  ### 6 ---
   
   #We are going to divide our UI into discrete sections, called tab panels.
   #To do this, we need the layout "tabsetPanel()".
-  
   tabsetPanel(
     id = "Panels", 
     
-    ##############################################.             
-    ############## Introduction tab ----   
-    ##############################################. 
+    ##* Introduction user interface ----   
     
     #We begin with an introduction tab, where we introduce the explorer and... 
     #its purpose.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give it a title. 
-    
     tabPanel(
       "Introduction", 
       icon = icon("info-circle"), 
       style = "float: top; height: 95%; width: 95%;
       background-color: #FFFFFF; border: 0px solid #FFFFFF;",
-      h3("Introduction"),
-      
-      ### 2 ---
+      h1("Introduction"),
       
       #Explain to the user what each tab visualises.
       #Each tab title is a hyperlink, linking to its respective tab.
-      
-      p(
-        "The explorer allows you to visualise mental health inpatient 
+      p("The explorer allows you to visualise mental health inpatient 
         data in a variety of ways. Within each of the following seven 
         sections, there are filters that let you select the data you are 
-        interested in:"
-      ),
+        interested in:"),
       tags$ul( 
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_time_trend", "Trends in diagnoses")
+            actionLink("link_to_trends_in_diagnoses_tab", "Trends in diagnoses")
           ), 
           icon("line-chart"), 
           " - shows changes in mental health conditions over 
@@ -118,21 +83,21 @@ fluidPage(
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_geography", "Geography")
+            actionLink("link_to_geography_tab", "Geography")
           ), 
           icon("globe"), 
           " - shows activity broken down by council area of residence."
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_age_sex", "Age/sex")
+            actionLink("link_to_age_sex_tab", "Age/sex")
           ), 
           icon("child"), 
           " - shows the age and sex distribution of the data."
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_deprivation", "Deprivation")
+            actionLink("link_to_deprivation_tab", "Deprivation")
           ), 
           icon("bar-chart"),
           " - shows activity across different levels of deprivation as 
@@ -140,7 +105,7 @@ fluidPage(
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_flow", "Cross-boundary flow")
+            actionLink("link_to_cross_boundary_flow_tab", "Cross-boundary flow")
           ),
           icon("exchange"),
           " - shows the relationship between where patients live and 
@@ -148,40 +113,35 @@ fluidPage(
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_readmissions", "Readmissions")
+            actionLink("link_to_readmissions_tab", "Readmissions")
           ),
           icon("bed"),
           " - shows information on readmissions within 28 and 133 days."
         ),
         tags$li(
           tags$b(
-            actionLink("link_to_tabpanel_table", "Table")
+            actionLink("link_to_table_tab", "Table")
           ),
           icon("table"),
           " - allows you to view the data in a table."
         )
       ),
       
-      ### 3 ---
-      
       #Insert the standard notes.
-      
-      p(
-        "When using the data explorer, please take the following 
-        factors into consideration:"
-      ),
+      p("When using the data explorer, please take the following 
+        factors into consideration:"),
       tags$ul( 
         tags$li(
           "The explorer visualises information recorded in the Scottish 
           Morbidity Record 01 (SMR01) and Scottish Morbidity Record 04 
           (SMR04) datasets. SMR04 includes all inpatients and day cases 
-          discharged from psychiatric specialties. SMR01 includes all 
-          inpatients and day cases discharged from non-obstetric and 
-          non-psychiatric specialties. For a complete list of 
-          specialties, open the following ",
+          admitted to and discharged from psychiatric specialties. SMR01 
+          includes all inpatients and day cases discharged from non-obstetric 
+          and non-psychiatric specialties. For a complete list of 
+          specialties, open the ",
           tags$a(
-            href = "http://www.ndc.scot.nhs.uk/docs/2018-12-06%20Specialty-Codes-and-Values.xlsx", 
-            "document"
+            href = "https://www.ndc.scot.nhs.uk/docs/2020-04-23%20Specialty-Codes-and-Values.xlsx", 
+            "Specialty Codes and Descriptions document"
           ), 
           " and consult the columns SMR01 and SMR04. Please note that
           this data release excludes activity in the Learning Disability 
@@ -208,23 +168,17 @@ fluidPage(
           sources of information. For more information, please refer to 
           the ",
           tags$a(
-            href = "http://www.isdscotland.org/About-ISD/Confidentiality/disclosure_protocol_v3.pdf", 
-            "NSS Statistical Disclosure Control Protocol."
+            href = "https://beta.isdscotland.org/media/4191/public-health-scotland-statistical-disclosure-control-protocol.pdf", 
+            "PHS Statistical Disclosure Control Protocol."
           ), 
           ""
         )
       ),
       
-      ### 4 ---
-      
       #Provide a download button for the glossary.
-      
-      p(
-        "To help you understand the information visualised in the 
+      p("To help you understand the information visualised in the 
         explorer, we have created a glossary of commonly used terms in
-        mental health care. Click the button below to download the glossary:"
-      ),
-      
+        mental health care. Click the button below to download the glossary:"),
       downloadButton(outputId = "download_glossary_one", 
                      label = "Download glossary", 
                      class = "glossaryone"),
@@ -233,18 +187,13 @@ fluidPage(
                    .glossaryone { color: #FFFFFF; }")
       ),
       
-      ### 5 ---
-      
       #Provide contact details for the team.
-      
-      p(
-        br(),
+      p(br(),
         "If you have any trouble using the explorer or have further 
         questions about the data, please contact us at:",
         tags$b(
-          tags$a(href = "mailto:NSS.isdMENTALHEALTH@nhs.net", 
-                 "nss.isdmentalhealth@nhs.net.")
-        ),
+          tags$a(href = "mailto:phs.isdmentalhealth@nhs.net", 
+                 "phs.isdmentalhealth@nhs.net.")),
         br(),
         br(),
         br(),
@@ -252,43 +201,31 @@ fluidPage(
       )
     ), 
     
+    ##* Trends in diagnoses user interface ----   
     
-    ##############################################.             
-    ############## Time trend tab ----   
-    ##############################################.  
-    
-    #Create the time trend tab.
-    
-    ### 1 ---
+    #Create the diagnoses tab.
     
     #Create a new tabPanel, stylise it, and give a title to the tab.
-    
     tabPanel(
       "Trends in diagnoses", 
       icon = icon("line-chart"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Trends in diagnoses", id = 'time_trend_top'),
-      
-      ### 2 ---
+      h1("Trends in diagnoses", id = 'diagnoses_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("This section allows you to see changes in mental health 
              conditions over time. The period covered is financial years 
-             1997/1998 - 2018/2019. Use the filters to visualise the data you 
+             1997/1998 - 2019/2020. Use the filters to visualise the data you 
              are interested in. You can visualise multiple health boards of 
              treatment at the same time. To view your data selection in a table,
-             use the <a href = '#timetrends_link'> 'Show/hide table' </a> 
+             use the <a href = '#diagnoses_link'> 'Show/hide table' </a> 
              button at the bottom of the page. To download your data selection 
-             as a CSV file, use the 'Download as CSV' button under the filters. 
+             as a .csv file, use the 'Download as .csv' button under the filters. 
              At the top-right corner of the graph, you will see a toolbar with 
              four buttons:")),
       
-      ### 3 ---
-      
       #Insert instructions on how to use the plotly toolbar.
-      
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"), 
@@ -311,16 +248,10 @@ fluidPage(
                 default range.")
       ),
       
-      ### 4 ---
-      
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you 
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_two", 
                      label = "Download glossary", 
                      class = "glossarytwo"),
@@ -329,15 +260,11 @@ fluidPage(
                    .glossarytwo { color: #FFFFFF; }")
       ),
       
-      ### 5 ---
-      
       #Repeat the standard note regarding disclosure control from the...
       #Introduction tab. Add another note that explains the difference between...
       #the psychiatric data presented in this tab v. the psychiatric data presented...
       #elsewhere in the publication.
-      
-      p(
-        br(),
+      p(br(),
         tags$b("Notes:"),
         br(),
         tags$b("1. Statistical disclosure control has been applied to protect 
@@ -352,162 +279,121 @@ fluidPage(
                data in this publication includes both F and non-F codes. As a result, 
                the psychiatric specialty figures presented in the 'Trends in diagnoses' 
                page are not comparable with the psychiatric specialty figures elsewhere 
-               in this statistical release.")
-      ),
-      
+               in this statistical release.")),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
                 
-                ### 6 ---
-                
-                #Insert the reactive filters.
+                #Insert the filters.
                 #We have five filters in total.
                 #Two of our filters have already been created in... 
                 #the Server syntax, using renderUI().
                 #We just need to make them appear using the uiOutput() command.
                 #We arrange our filters in columns. 
-                #The last column contains the 'Download as CSV' button.
-                
+                #The last column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
-                         inputId = "time_trend_dataset",
+                         inputId = "diagnoses_dataset",
                          label = "Select treatment specialty", 
-                         choices = tt_dataset, 
+                         choices = diag_dataset, 
                          selected = "Psychiatric",
                          justified = TRUE,
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(4,
-                       
-                       uiOutput("time_trend_location_types")
-                       
+                       uiOutput("diagnoses_location_types")
                 ),
                 
                 column(5, 
-                       
-                       uiOutput("time_trend_locations")
-                       
+                       uiOutput("diagnoses_locations")
                 ),
                 
                 column(4, 
-                       
                        shinyWidgets::pickerInput(
-                         inputId = "time_trend_diagnoses",
+                         inputId = "diagnoses_diagnosis_groupings",
                          label = "Select diagnosis grouping",
-                         choices = tt_diagnoses,
+                         choices = diag_diagnosis_groupings,
                          selected = 
                            "Disorders of adult behaviour and personality"
                        )
-                       
                 ),
                 
                 column(5, 
-                       
                        shinyWidgets::pickerInput(
-                         inputId = "time_trend_measure_type",
+                         inputId = "diagnoses_measure_type",
                          label = "Select measure",
-                         choices = tt_measures, 
+                         choices = diag_measures, 
                          selected = "Number of patients"
                        )
-                       
                 ),
                 
                 column(4,
-                       
-                       downloadButton(outputId = "download_time_trend", 
-                                      label = "Download as CSV", 
+                       downloadButton(outputId = "download_diagnoses", 
+                                      label = "Download as .csv", 
                                       class = "mytimetrendbutton"),
-                       
                        tags$head(
                          tags$style(".mytimetrendbutton { background-color: 
                                     #0072B2; } 
                                     .mytimetrendbutton { color: #FFFFFF; }")
                        )
-                       
                 )
-                
       ),
       
-      ### 7 ---
-      
-      #In the main panel of the time trend tab, insert the time trend line...
-      #chart, the 'Show/hide table' button, and the time trend table. 
-      
+      #In the main panel of the diagnoses tab, insert the diagnoses line...
+      #chart, the 'Show/hide table' button, and the diagnoses table. 
       mainPanel(width = 12,
-                plotlyOutput("time_trend_plot", 
+                plotlyOutput("diagnoses_plot", 
                              width = "1090px",
                              height = "600px"),
                 br(),
                 br(),
-                HTML("<button data-toggle = 'collapse' href = '#timetrends'
-                     class = 'btn btn-primary' id = 'timetrends_link'> 
+                HTML("<button data-toggle = 'collapse' href = '#diagnoses'
+                     class = 'btn btn-primary' id = 'diagnoses_link'> 
                      <strong> Show/hide table </strong></button>"),
-                HTML("<div id = 'timetrends' class = 'collapse'>"),
+                HTML("<div id = 'diagnoses' class = 'collapse'>"),
                 br(),
-                dataTableOutput("time_trend_table"),
+                dataTableOutput("diagnoses_table"),
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #Finally, add a button that allows the user to go back to the...
                 #top of the page.
-                
-                tags$a(href = '#time_trend_top', 
+                tags$a(href = '#diagnoses_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
                        "Back to top"),
-                
                 br(),
                 br())
     ),
     
-    
-    ##############################################.             
-    ############## Geography tab ----   
-    ##############################################.  
+    ##* Geography user interface ----   
     
     #Create the geography tab.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give a title to the tab.
-    
     tabPanel(
       "Geography", 
       icon = icon("globe"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Geography", id = 'geography_top'),
-      
-      ### 2 ---
+      h1("Geography", id = 'geography_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("This section contains an interactive map that presents data broken 
              down by council area of residence. Use the filters to visualise the 
              data you are interested in. Click on a council area on the map to 
              reveal the rate of patients/discharges. To view the data in a table, 
              use the <a href = '#geographies_link'> 'Show/hide table' </a> button 
-             at the bottom of the page. To download your data selection as a CSV 
-             file, use the 'Download as CSV' button next to the filters.")),
-      
-      ### 3 ---
+             at the bottom of the page. To download your data selection as a .csv 
+             file, use the 'Download as .csv' button next to the filters.")),
       
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you 
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_three", 
                      label = "Download glossary", 
                      class = "glossarythree"),
@@ -516,34 +402,23 @@ fluidPage(
                    .glossarythree { color: #FFFFFF; }")
       ),
       
-      ### 4 ---
-      
       #Repeat the standard note regarding disclosure control.
-      
-      p(
-        br(),
+      p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
                 
-                ### 5 ---
-                
-                #Insert the reactive filters.
+                #Insert the filters.
                 #We have three filters in total.
                 #We arrange our filters in columns. 
-                #The third column contains the 'Download as CSV' button.
-                
+                #The third column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "geography_datasets",
                          label = "Select treatment specialty", 
@@ -553,11 +428,9 @@ fluidPage(
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(5, 
-                       
                        shinyWidgets::pickerInput(
                          inputId = "geography_measure_type",
                          label = "Select measure",
@@ -565,38 +438,29 @@ fluidPage(
                          selected = 
                            "Rate of patients (per 100,000 population)"
                        ), 
-                       
                        shinyWidgets::pickerInput(
                          inputId = "geography_financial_years",
                          label = "Select financial year",
                          choices = geography_fin_years,
-                         selected = "2018/2019"
+                         selected = "2019/2020"
                        )
-                       
                 ),
                 
                 column(3,
-                       
                        downloadButton(outputId = "download_geography", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "mygeographybutton",
                                       style = "margin: 25px 10px 25px 10px"),
-                       
                        tags$head(
                          tags$style(".mygeographybutton { background-color: 
                                     #0072B2; } 
                                     .mygeographybutton { color: #FFFFFF; }")
                        )
-                       
                 )
-                
       ),
       
-      ### 6 ---
-      
-      #In the main panel of the geography tab, insert the CA map, ...
+      #In the main panel of the geography tab, insert the council area map, ...
       #the 'Show/hide table' button, and the geography table. 
-      
       mainPanel(width = 12,
                 br(),
                 leafletOutput("mymap", height = 600),
@@ -611,10 +475,8 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),                
-                
                 #Finally, add a button that allows the user to go back to the...
                 #top of the page.
-                
                 tags$a(href = '#geography_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
@@ -624,41 +486,29 @@ fluidPage(
                 br())
     ),
     
-    
-    ##############################################.             
-    ############## Age/sex tab ----   
-    ##############################################.  
+    ##* Age/sex user interface ----   
     
     #Create the age/sex tab.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give a title to the tab. 
-    
     tabPanel(
       "Age/sex", 
       icon = icon("child"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Age/sex", id = 'age_sex_top'),
-      
-      ### 2 ---
+      h1("Age/sex", id = 'age_sex_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("This section allows you to explore the age and sex distribution 
              of the data. Use the filters to visualise the data you are 
              interested in. To view your data selection in a table, use the 
              <a href = '#age_and_sex_link'> 'Show/hide table' </a> button at 
-             the bottom of the page. To download your data selection as a CSV 
-             file, use the 'Download as CSV' button under the filters. At the 
+             the bottom of the page. To download your data selection as a .csv 
+             file, use the 'Download as .csv' button under the filters. At the 
              top-right corner of the graph, you will see a toolbar with four 
              buttons:")),
       
-      ### 3 ---
-      
       #Insert instructions on how to use the plotly toolbar.
-      
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
@@ -681,16 +531,10 @@ fluidPage(
                 default range.")
       ),
       
-      ### 4 ---
-      
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_four", 
                      label = "Download glossary", 
                      class = "glossaryfour"),
@@ -699,37 +543,26 @@ fluidPage(
                    .glossaryfour { color: #FFFFFF; }")
       ),
       
-      ### 5 ---
-      
       #Repeat the point regarding disclosure control.
-      
-      p(
-        br(),
+      p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
                 
-                ### 6 ---
-                
-                #Insert the reactive filters.                                                
+                #Insert the filters.                                                
                 #We have five filters in total.
                 #Two of our filters have already been created in...
                 #the Server syntax, using renderUI().
                 #We just need to make them appear using the uiOutput() command.
                 #We arrange our filters in columns.
-                #The last column contains the 'Download as CSV' button.
-                
+                #The last column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "age_sex_dataset",
                          label = "Select treatment specialty", 
@@ -739,63 +572,48 @@ fluidPage(
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(4,
-                       
                        uiOutput("age_sex_location_types")
-                       
                 ),
                 
                 column(4,
-                       
                        uiOutput("age_sex_locations")
-                       
                 ),
                 
                 column(4,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "age_sex_financial_year",
                          label = "Select financial year", 
                          choices = as_financial_years,
-                         selected = "2018/2019"
+                         selected = "2019/2020"
                        )
-                       
                 ),
                 
                 column(4,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "age_sex_measure_type",
                          label = "Select measure",
                          choices = as_measures, 
                          selected = "Number of patients"
                        )
-                       
                 ),
                 
                 column(4, 
-                       
                        downloadButton(outputId = "download_age_sex", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "myagesexbutton"),
                        tags$head(
                          tags$style(".myagesexbutton { background-color: 
                                     #0072B2; } 
                                     .myagesexbutton { color: #FFFFFF; }")
                        )
-                       
                 )
-                
       ),
-      
-      ### 7 ---
       
       #In the main panel, we insert the age/sex pyramid, the 'Show/hide... 
       #table' button, and the age/sex table.
-      
       mainPanel(width = 12, 
                 plotlyOutput("age_sex_pyramid", 
                              width = "1090px",
@@ -811,10 +629,8 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #Finally, add a button that allows the user to go back to...
                 #the top of the page.
-                
                 tags$a(href = '#age_sex_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
@@ -824,28 +640,19 @@ fluidPage(
                 br())
     ),
     
-    
-    ##############################################.             
-    ############## Deprivation tab ----   
-    ##############################################.
+    ##* Deprivation user interface ----   
     
     #Create the deprivation tab.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give a title to the tab. 
-    
     tabPanel(
       "Deprivation", 
       icon = icon("bar-chart"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Deprivation", id = 'depr_top'),
-      
-      ### 2 ---
+      h1("Deprivation", id = 'depr_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("This section contains two graphs, both revolving around 
              deprivation. The <a href = '#quintile_graph_link'> first graph </a> 
              shows inpatient activity broken down by 
@@ -856,14 +663,11 @@ fluidPage(
              health boards of residence in the first graph. To view your data 
              selection in a table, use the 
              <a href = '#RII_link'> 'Show/hide table' </a> button under each 
-             graph. To download your data selection as a CSV file, use the 
-             'Download as CSV' button created for each graph. At the top-right 
+             graph. To download your data selection as a .csv file, use the 
+             'Download as .csv' button created for each graph. At the top-right 
              corner of each graph, you will see a toolbar with four buttons:")),
       
-      ### 3 ---
-      
       #Insert instructions on how to use the plotly toolbar.
-      
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
@@ -886,16 +690,10 @@ fluidPage(
                 default range.")
       ),
       
-      ### 4 ---
-      
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_five", 
                      label = "Download glossary", 
                      class = "glossaryfive"),
@@ -904,50 +702,35 @@ fluidPage(
                    .glossaryfive { color: #FFFFFF; }")
       ),
       
-      ### 5 ---
-      
       #Repeat the disclosure control note.
-      
-      p(
-        br(),
+      p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
-                
-                ### 6 ---
                 
                 #Since this page contains two graphs and, therefore, two...
                 #distinct sections, we can insert a title for each section to...
                 #clarify what each of them visualises.
                 #This is the title of the first section.
-                
-                h3("Activity by deprivation quintile", 
+                h2("Activity by deprivation quintile", 
                    id = 'quintile_graph_link'),
-                
                 br(),
                 
-                ### 7 ---
-                
-                #Insert the reactive filters for the first chart, i.e., the...
+                #Insert the filters for the first chart, i.e., the...
                 #bar chart.                                             
                 #We have five filters.
                 #Our first two filters have already been created in...
                 #the Server, using renderUI().
                 #We just need to make them appear using the uiOutput() command.
                 #We arrange our filters in columns.
-                #The last column contains the 'Download as CSV' button.
-                
+                #The last column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "deprivation_dataset",
                          label = "Select treatment specialty", 
@@ -961,59 +744,45 @@ fluidPage(
                 ),
                 
                 column(4,
-                       
                        uiOutput("deprivation_location_types")
-                       
                 ),
                 
                 column(5,
-                       
                        uiOutput("deprivation_locations")
-                       
                 ),
                 
                 column(4,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "deprivation_financial_year",
                          label = "Select financial year", 
                          choices = depr_financial_years, 
-                         selected = "2018/2019"
+                         selected = "2019/2020"
                        )
-                       
                 ),
                 
                 column(5,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "deprivation_measure_type",
                          label = "Select measure",
                          choices = depr_measures, 
                          selected = "Number of patients"
                        )
-                       
                 ),
                 
                 column(4, 
-                       
                        downloadButton(outputId = "download_deprivation", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "mydeprivationbutton"),
                        tags$head(
                          tags$style(".mydeprivationbutton { background-color: 
                                     #0072B2; } 
                                     .mydeprivationbutton { color: #FFFFFF; }")
                        )
-                       
                 )
-                
       ),
-      
-      ### 8 ---
       
       #Visualise the deprivation bar chart, the 'Show/hide table' button, and...
       #the table associated with the bar chart.
-      
       mainPanel(width = 12,
                 plotlyOutput("deprivation_bar_chart", 
                              width = "1090px",
@@ -1029,11 +798,8 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
-                
                 #Add a button that allows the user to go back to the top of the...
                 #page.
-                
                 tags$a(href = '#depr_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
@@ -1042,26 +808,20 @@ fluidPage(
                 #As mentioned above, this tab contains two charts.
                 #As such, we need to divide our page into two sections.
                 #To do this, we use a horizontal line as a page break.
-                
                 hr(),
                 
                 #Header or title for the second section.
-                
-                h3("Relative Index of Inequality time trend", 
+                h2("Relative Index of Inequality time trend", 
                    id = 'RII_trend_link'),
                 br(),
                 
-                ### 9 ---
-                
-                #Insert the reactive filters for the second graph, i.e., the...
+                #Insert the filters for the second graph, i.e., the...
                 #line chart.
                 #We have two filters, which will be arranged in two separate...
                 #columns.
-                #There is another column which contains the 'Download as CSV'...
+                #There is another column which contains the 'Download as .csv'...
                 #button.
-                
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "RII_datasets",
                          label = "Select treatment specialty", 
@@ -1071,34 +831,27 @@ fluidPage(
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(3,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "RII_measure_type",
                          label = "Select measure",
                          choices = RII_measures, 
                          selected = "Patients"
                        )
-                       
                 ),
                 
                 column(3,
-                       
                        downloadButton(outputId = "download_RII", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "myRIIbutton", 
                                       style = "margin: 25px 10px 25px 10px"),
-                       
                        tags$head(
                          tags$style(".myRIIbutton { background-color: #0072B2; } 
                                     .myRIIbutton { color: #FFFFFF; }")
                        )
-                       
                 ),
-                
                 br(),
                 br(),
                 br(),
@@ -1107,12 +860,9 @@ fluidPage(
                 br(),
                 br(),
                 br(),
-                
-                ### 10 ---
                 
                 #Finally, visualise the line chart, the 'Show/hide table'... 
                 #button, and the table associated with the line chart.
-                
                 plotlyOutput("RII_line_chart", 
                              width = "1090px",
                              height = "600px"),
@@ -1128,10 +878,8 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #You can also add a button that allows the user to go back to...
                 #the top of the page.
-                
                 tags$a(href = '#depr_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
@@ -1142,45 +890,31 @@ fluidPage(
                 
       )),
     
-    ##############################################.             
-    ############## Cross-boundary flow tab ----   
-    ##############################################.  
+    ##* Cross-boundary flow user interface ----   
     
     #Create the cross-boundary flow tab.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give a title to the tab. 
-    
     tabPanel(
       "Cross-boundary flow", 
       icon = icon("exchange"),  
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Cross-boundary flow", id = 'cbf_top'),
-      
-      ### 2 ---
+      h1("Cross-boundary flow", id = 'cbf_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("The following diagram shows you how many patients living in the 
              selected NHS board of residence were treated outside their board. 
              Use the filters to visualise the data you are interested in. To 
              view your data selection in a table, use the <a href = '#flow_link'> 
              'Show/hide table' </a> button at the bottom of the page. To 
-             download your data selection as a CSV file, use the 'Download as CSV'
+             download your data selection as a .csv file, use the 'Download as .csv'
              button next to the filters.")),
       
-      ### 3 ---
-      
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_six", 
                      label = "Download glossary", 
                      class = "glossarysix"),
@@ -1189,33 +923,22 @@ fluidPage(
                    .glossarysix { color: #FFFFFF; }")
       ),
       
-      ### 4 ---
-      
       #Repeat the disclosure control note.
-      
-      p(
-        br(),
+      p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
                 
-                ### 5 ---
-                
-                #Insert the reactive filters.                                             
+                #Insert the filters.                                             
                 #We are using three filters, arranged in two columns.
-                #A third column contains the 'Download as CSV' button.
-                
+                #A third column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "flow_dataset",
                          label = "Select treatment specialty", 
@@ -1225,11 +948,9 @@ fluidPage(
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(4, 
-                       
                        shinyWidgets::pickerInput(
                          inputId = "flow_board_of_residence",
                          label = "Select health board of residence",
@@ -1241,15 +962,13 @@ fluidPage(
                          inputId = "flow_financial_year",
                          label = "Select financial year", 
                          choices = fl_financial_years, 
-                         selected = "2018/2019"
+                         selected = "2019/2020"
                        )
-                       
                 ),
                 
                 column(3,
-                       
                        downloadButton(outputId = "download_flow", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "myflowbutton",
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
@@ -1257,16 +976,11 @@ fluidPage(
                                     #0072B2; } 
                                     .myflowbutton { color: #FFFFFF; }")
                        )
-                       
                 )
-                
       ),
-      
-      ### 6 ---
       
       #In the main panel, we insert the cross-boundary flow sentence, the...
       #diagram, the 'Show/hide table' button, and the cross-boundary flow table.
-      
       mainPanel(width = 12,
                 br(),
                 column(12, 
@@ -1287,10 +1001,8 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #Finally, add a button that allows the user to go back to the...
                 #top of the page.
-                
                 tags$a(href = '#cbf_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
@@ -1300,47 +1012,33 @@ fluidPage(
                 br())
     ),
     
-    ##############################################.             
-    ############## Readmissions tab ----   
-    ##############################################.
+    ##* Readmissions user interface ----   
     
     #Create the readmissions tab.
     
-    ### 1 ---
-    
     #Create a new tabPanel, stylise it, and give a title to the tab. 
-    
     tabPanel(
       "Readmissions", 
       icon = icon("bed"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;",
-      h3("Readmissions", id = 'readm_top'),
-      
-      ### 2 ---
+      h1("Readmissions", id = 'readm_top'),
       
       #Provide a description for the tab.
-      
       p(HTML("This section presents percentage readmissions within 28 and 133 
              days after discharge. There are two graphs in this page: the 
              <a href = '#readm_HB_comparison_link'> first one </a> allows you to 
              compare multiple health boards of treatment in a 
              single year, whereas the <a href = '#readm_trend_link'> second one </a> 
-             is a time trend for each board. 
-             Please note that this page only includes readmissions in the following
-             psychiatric specialties: G1 - General Psychiatry and G4 - 
-             Psychiatry of Old Age. Use the filters to visualise the data 
+             is a time trend for each board. Use the filters to visualise the data 
              you are interested in. It is possible to select multiple health boards 
              in the second graph. To view your data selection in a table, use the 
              <a href = '#read_link_two'> 'Show/hide table' </a> button under each 
-             graph. To download your data selection as a CSV file, use the 
-             'Download as CSV' button next to each set of filters. At the top-right 
+             graph. To download your data selection as a .csv file, use the 
+             'Download as .csv' button next to each set of filters. At the top-right 
              corner of each graph, you will see a toolbar with four buttons:")),
       
-      ### 3 ---
-      
       #Instructions on how to use the plotly toolbar.
-      
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
@@ -1363,16 +1061,10 @@ fluidPage(
                 default range.")
       ),
       
-      ### 4 ---
-      
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_seven", 
                      label = "Download glossary", 
                      class = "glossaryseven"),
@@ -1381,45 +1073,40 @@ fluidPage(
                    .glossaryseven { color: #FFFFFF; }")
       ),
       
-      ### 5 ---
-      
-      #Repeat the disclosure control note.
-      
-      p(
+      #Repeat the disclosure control note and add another note to clarify...
+      #which psychiatric specialties were included in the readmission analysis.
+      p(br(),
+        tags$b("Notes:"),
         br(),
         tags$b(
-          "Note: Statistical disclosure control has been applied to protect 
+          "1. Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        ),
+        br(), 
+        tags$b(
+          "2. Only readmissions in the following psychiatric specialties are 
+          included in this page: G1 - General Psychiatry and G4 – Psychiatry of 
+          Old Age."
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
-                
-                ### 6 ---
                 
                 #Since this page contains two graphs and, therefore, two...
                 #distinct sections, we can insert a title for each section to...
                 #clarify what each of them visualises.
                 #This is the title of the first section.
-                
-                h3("Health board comparison", 
+                h2("Health board comparison", 
                    id = 'readm_HB_comparison_link'),
                 br(),
                 
-                ### 7 ---
-                
-                #Insert the reactive filters for the first graph, i.e., the...
+                #Insert the filters for the first graph, i.e., the...
                 #bar chart.                                             
                 #We are using three filters, arranged in three columns.
-                #A fourth column contains the 'Download as CSV' button.
-                
+                #A fourth column contains the 'Download as .csv' button.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "readmissions_dataset",
                          label = "Select treatment specialty", 
@@ -1429,35 +1116,29 @@ fluidPage(
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
                        )
-                       
                 ),
                 
                 column(2,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "readmissions_financial_year",
                          label = "Select financial year", 
                          choices = readm_financial_years, 
-                         selected = "2018/2019"
+                         selected = "2019/2020"
                        )
-                       
                 ),
                 
                 column(4,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "readmissions_measure_type",
                          label = "Select measure",
                          choices = readm_measures, 
                          selected = "Percentage readmissions within 28 days"
                        )
-                       
                 ),
                 
                 column(3, 
-                       
                        downloadButton(outputId = "first_download_readmissions", 
-                                      label = "Download as CSV", 
+                                      label = "Download as .csv", 
                                       class = "myfirstreadmbutton", 
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
@@ -1465,14 +1146,10 @@ fluidPage(
                                     #0072B2; } 
                                     .myfirstreadmbutton { color: #FFFFFF; }")
                        )
-                       
                 )),
-      
-      ### 8 ---
       
       #Visualise the bar chart, the 'Show/hide table' button, and the table...
       #associated with the bar chart.
-      
       mainPanel(width = 12, 
                 plotlyOutput("readm_bar_chart", 
                              width = "1090px",
@@ -1486,36 +1163,26 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #Add a button that allows the user to go back to the top of the...
                 #page.
-                
                 tags$a(href = '#readm_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
                        "Back to top"),
-                
                 #As mentioned above, this tab contains two charts.
                 #As such, we need to divide our page into two sections.
                 #To do this, we use a horizontal line as a page break.
-                
                 hr(),
-                
                 #Header or title for the second section.
-                
-                h3("Trend over time", 
+                h2("Trend over time", 
                    id = 'readm_trend_link'),
                 br(),
                 
-                ### 9 ---
-                
-                #Insert the reactive filters for the second graph, i.e., the...
+                #Insert the filters for the second graph, i.e., the...
                 #line chart.
                 #We have three filters, arranged in columns.
-                #Add the 'Download as CSV' button too.
-                
+                #Add the 'Download as .csv' button too.
                 column(3,
-                       
                        shinyWidgets::radioGroupButtons(
                          inputId = "readmissions_dataset_two",
                          label = "Select treatment specialty", 
@@ -1524,22 +1191,10 @@ fluidPage(
                          justified = TRUE,
                          checkIcon = list(yes = icon("ok", lib = "glyphicon")),
                          direction = "vertical"
-                       ),
-                       
-                       downloadButton(outputId = "second_download_readmissions", 
-                                      label = "Download as CSV", 
-                                      class = "mysecondreadmbutton", 
-                                      style = "margin: 10px 0px 0px 0px"),
-                       tags$head(
-                         tags$style(".mysecondreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .mysecondreadmbutton { color: #FFFFFF; }")
                        )
-                       
                 ),
                 
                 column(5, 
-                       
                        shinyWidgets::pickerInput(
                          "readmissions_location", 
                          label = "Select treatment location (up to four selections allowed)", 
@@ -1552,20 +1207,28 @@ fluidPage(
                          selected = "Scotland",
                          width = '100%'
                        ) 
-                       
                 ),
                 
                 column(4,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "readmissions_measure_type_two",
                          label = "Select measure",
                          choices = readm_measures, 
                          selected = "Percentage readmissions within 28 days"
                        )
-                       
                 ),
                 
+                column(12, 
+                       downloadButton(outputId = "second_download_readmissions", 
+                                      label = "Download as .csv", 
+                                      class = "mysecondreadmbutton", 
+                                      style = "margin: 10px 0px 0px 0px"),
+                       tags$head(
+                         tags$style(".mysecondreadmbutton { background-color: 
+                                    #0072B2; } 
+                                    .mysecondreadmbutton { color: #FFFFFF; }")
+                       )
+                ),
                 br(),
                 br(),
                 br(),
@@ -1574,12 +1237,9 @@ fluidPage(
                 br(),
                 br(),
                 br(),
-                
-                ### 10 ---
                 
                 #Finally, visualise the line chart, the 'Show/hide table'... 
                 #button, and the table associated with the line chart.
-                
                 plotlyOutput("readm_line_chart", 
                              width = "1090px",
                              height = "600px"),
@@ -1595,60 +1255,41 @@ fluidPage(
                 HTML("</div>"),
                 br(),
                 br(),
-                
                 #You can also add a button that allows the user to go back...
                 #to the top of the page.
-                
                 tags$a(href = '#readm_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
                        "Back to top"),
-                
                 br(),
                 br()
                 
       )),
     
-    ##############################################.              
-    ############## Table tab ----    
-    ##############################################. 
+    ##* Table user interface ----    
     
     #Create the table tab.
     
-    ### 1 ---
-    
     #Create the final tabPanel, stylise it, and give a title to the tab. 
-    
     tabPanel(
       "Table", 
       icon = icon("table"), 
       style = "float: top; height: 95%; width: 95%; background-color: #FFFFFF; 
       border: 0px solid #FFFFFF;", 
-      h3("Table", id = 'table_top'),
-      
-      ### 2 ---
+      h1("Table", id = 'table_top'),
       
       #Provide a description for the tab.
-      
-      p(
-        "This section allows you to view the data in table format. Use the  
+      p("This section allows you to view the data in table format. Use the  
         'Select data file' filter to visualise the file you are interested in 
         (the list includes data files used in the 'Trend data' page). You can then
         click on the filters below the column names of the table and use the 
-        dropdowns to modify the table. To download your data selection as a CSV 
-        file, use the 'Download as CSV' button."
-      ),
-      
-      ### 3 ---
+        dropdowns to modify the table. To download your data selection as a .csv 
+        file, use the 'Download as .csv' button."),
       
       #Download button for the glossary.
-      
-      p(
-        "You can also download our glossary of commonly used terms in
+      p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
-        understand the information visualised in the explorer:"
-      ),
-      
+        understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_eight", 
                      label = "Download glossary", 
                      class = "glossaryeight"),
@@ -1657,33 +1298,22 @@ fluidPage(
                    .glossaryeight { color: #FFFFFF; }")
       ),
       
-      ### 4 ---
-      
       #Statistical disclosure control note.
-      
-      p(
-        br(),
+      p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
           patient confidentiality. As a result, the figures presented here 
           may not be additive and may differ from previous 
           sources of information."
-        )
-      ),
-      
+        )),
       p(""),
-      
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
                            border: 0px solid #336699; }"),
                 
-                ### 5 ---
-                
                 #We are only using one filter here, which contains the...
                 #names of the files.
-                #We also insert the 'Download as CSV' button.
-                
+                #We also insert the 'Download as .csv' button.
                 column(6,
-                       
                        shinyWidgets::pickerInput(
                          inputId = "table_filenames", 
                          label = "Select data file",  
@@ -1698,16 +1328,13 @@ fluidPage(
                                      "Length of stay (Trend data)"), 
                          width = "95%"
                        )
-                       
                 ), 
                 
                 column(4,
-                       
                        downloadButton(outputId = 'download_table', 
-                                      label = 'Download as CSV', 
+                                      label = 'Download as .csv', 
                                       class = "mytablebutton", 
                                       style = "margin: 25px 10px 25px 10px")
-                       
                 )
       ),
       
@@ -1716,18 +1343,13 @@ fluidPage(
                    .mytablebutton { color: #FFFFFF; }")
       ),
       
-      ### 6 ---
-      
       #Finally, insert the actual table.
-      
       mainPanel(width = 12, 
                 dataTableOutput("table_tab"),
                 br(),
-                
                 #Add a button that allows the user to go back to the top of the...
                 #page.
-                
-                tags$a(href = '#time_trend_top', 
+                tags$a(href = '#table_top', 
                        icon("circle-arrow-up", 
                             lib = "glyphicon"), 
                        "Back to top"),
@@ -1735,11 +1357,10 @@ fluidPage(
                 br()
       ) 
       
-      
     ) #End of tab panel.
     
   ) #End of tab set. 
   
 ) #End of fluid page.
 
-#We are finished with the UI syntax.
+#We are finished with the user interface syntax.
