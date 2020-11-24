@@ -192,8 +192,8 @@ fluidPage(
         "If you have any trouble using the explorer or have further 
         questions about the data, please contact us at:",
         tags$b(
-          tags$a(href = "mailto:phs.isdmentalhealth@nhs.net", 
-                 "phs.isdmentalhealth@nhs.net.")),
+          tags$a(href = "mailto:phs.mentalhealth@phs.scot", 
+                 "phs.mentalhealth@phs.scot.")),
         br(),
         br(),
         br(),
