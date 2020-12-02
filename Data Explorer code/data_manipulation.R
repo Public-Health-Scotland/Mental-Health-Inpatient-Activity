@@ -119,8 +119,8 @@ geography <- geography %>% mutate_if(is.character, as.factor)
 #There should be seven files beginning with "CA_2011_EoR_Scotland".
 #We will use ms_simplify() to decrease the size of the shapefile -this will help R to...
 #render the map much faster.
-#IMPORTANT NOTE: Lines 123-140 were executed in RStudio Desltop, not RStudio Server,...
-#due to issues with the way the rgdal package was built on PHS RStudio Server by IT. 
+#IMPORTANT NOTE: Lines 123-140 were executed in RStudio Desktop, not RStudio Server,...
+#due to issues with the way the rgdal package was built on the PHS RStudio Server by IT. 
 #These lines should be fine to run on RStudio Server by non-PHS users. 
 CA <- readOGR(dsn = paste0(filepath, "Map"),
               layer = "CA_2011_EoR_Scotland") %>% 
