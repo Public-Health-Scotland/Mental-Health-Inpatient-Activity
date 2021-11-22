@@ -1,6 +1,6 @@
 #Name: Data explorer
 #Author: Nikos Alexandrou
-#Modified: 12/11/2020
+#Modified: 10/11/2021
 #Type: Data visualisation
 #Written on: RStudio
 #Written for: R version 3.6.1 
@@ -36,7 +36,7 @@ filepath <- paste0("myfilepath")
 ##* Import the data and make the necessary transformations ----
 
 #Import the file that will be used to create the trends in diagnoses tab.
-diagnoses <- read_csv("MentalHealthInpatientActivity_DiagnosisTrends_20201124.csv", 
+diagnoses <- read_csv("MentalHealthInpatientActivity_DiagnosisTrends_20211123.csv", 
                       col_types = "ccccccn")
 
 #Round the rates to two decimal points only. This fixes the problem in the...
@@ -77,7 +77,7 @@ diagnoses <- diagnoses %>% mutate_if(is.character, as.factor)
 #displayed in the tooltip of our interactive map.
 #'CA' (see below) is the shapefile containing the council area polygons, ...
 #which will be projected onto a leaflet map.
-geography <- read_csv("MentalHealthInpatientActivity_GeographyData_20201124.csv", col_types = "ccccn")
+geography <- read_csv("MentalHealthInpatientActivity_GeographyData_20211123.csv", col_types = "ccccn")
 
 #Round the rates to two decimal points only. This fixes the problem in the...
 #"Table" tab, where the numeric filters have too many decimal points.
@@ -119,9 +119,6 @@ geography <- geography %>% mutate_if(is.character, as.factor)
 #There should be seven files beginning with "CA_2011_EoR_Scotland".
 #We will use ms_simplify() to decrease the size of the shapefile -this will help R to...
 #render the map much faster.
-#IMPORTANT NOTE: Lines 125-142 were executed in RStudio Desktop, not RStudio Server,...
-#due to issues with the way the rgdal package was built on the PHS RStudio Server by IT. 
-#These lines should be fine to run on RStudio Server by non-PHS users. 
 CA <- readOGR(dsn = paste0(filepath, "Map"),
               layer = "CA_2011_EoR_Scotland") %>% 
   rmapshaper::ms_simplify(keep = 0.0025)
@@ -145,7 +142,7 @@ saveRDS(ca_bound, paste0(filepath, "Map/CA_boundary.rds"))
 CA_smaller <- readRDS("Map/CA_boundary.rds")
 
 #Import the file that will be used to create the age/sex tab.
-age_sex <- read_csv("MentalHealthInpatientActivity_AgeSexData_20201124.csv", col_types = "cccccccn")
+age_sex <- read_csv("MentalHealthInpatientActivity_AgeSexData_20211123.csv", col_types = "cccccccn")
 
 #Change the text "crude rate" to just "rate".
 age_sex <- age_sex %>% 
@@ -194,7 +191,7 @@ age_sex <- age_sex %>%
 #whereas the second graph will display the Relative Index of Inequality (RII)...
 #as a trend over time.
 #We start with the file containing the quintiles, called 'deprivation'.
-deprivation <- read_csv("MentalHealthInpatientActivity_SIMDData_20201124.csv", col_types = "ccccccn")
+deprivation <- read_csv("MentalHealthInpatientActivity_SIMDData_20211123.csv", col_types = "ccccccn")
 
 #Change the text "crude rate" to just "rate".
 #Transform the simd variable too:
@@ -236,7 +233,7 @@ depr_measures <- deprivation %>% distinct(measure) %>% pull(measure)
 deprivation <- deprivation %>% mutate_if(is.character, as.factor)
 
 #Moving on to the second file utilised in the Deprivation tab, called 'RII'.
-RII <- read_csv("MentalHealthInpatientActivity_RIIData_20201124.csv", col_types = "ccccn")
+RII <- read_csv("MentalHealthInpatientActivity_RIIData_20211123.csv", col_types = "ccccn")
 
 #Transform the 'measure' variable: change the value 'Residents' to 'Hospital...
 #residents' in order to make its meaning clearer.
@@ -263,7 +260,7 @@ RII_measures <- RII %>% distinct(measure) %>% pull(measure)
 RII <- RII %>% mutate_if(is.character, as.factor)
 
 #Import the file that will be used to create the cross-boundary flow tab.
-flow <- read_csv("MentalHealthInpatientActivity_CrossBoundaryFlow_20201124.csv", col_types = "cccccnn")
+flow <- read_csv("MentalHealthInpatientActivity_CrossBoundaryFlow_20211123.csv", col_types = "cccccnn")
 
 #Save certain variables as objects, to be used as selections in the...
 #filters. 
@@ -289,7 +286,7 @@ flow <- flow %>%
   mutate_if(is.character, as.factor) 
 
 #Import the file that will be used to create the readmissions tab.
-readmissions <- read_csv("MentalHealthInpatientActivity_PercentageReadmissionData_20201124.csv", col_types = "ccccnc")
+readmissions <- read_csv("MentalHealthInpatientActivity_PercentageReadmissionData_20211123.csv", col_types = "ccccnc")
 
 #Round the rates to two decimal points only. This fixes the problem in...
 #the "Table" tab, where the numeric filters have too many decimal points.
@@ -327,7 +324,7 @@ readmissions <- readmissions %>% mutate_if(is.character, as.factor)
 #State Hospitals Board as these are alternative names for the National Waiting...
 #Times Centre and the State Hospital respectively. No need to have two names, ...
 #and thus duplicate entries, for each of these hospitals.
-activity_by_hospital <- read_csv("MentalHealthInpatientActivity_TrendData_20201124.csv", 
+activity_by_hospital <- read_csv("MentalHealthInpatientActivity_TrendData_20211123.csv", 
                                  col_types = "cccccccn")
 
 activity_by_hospital <- activity_by_hospital %>%
@@ -345,7 +342,7 @@ activity_by_hospital <- activity_by_hospital %>%
   select(Specialty, year, hbtreat_name, hospital_name, TrendType, Value) %>%
   arrange(Specialty, year, hbtreat_name, hospital_name, TrendType)
 
-length_of_stay <- read_csv("MentalHealthInpatientActivity_LengthOfStay_20201124.csv", 
+length_of_stay <- read_csv("MentalHealthInpatientActivity_LengthOfStay_20211123.csv", 
                            col_types = "ccccccn")
 
 length_of_stay <- length_of_stay %>%
