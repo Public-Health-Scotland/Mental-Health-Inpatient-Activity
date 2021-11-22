@@ -9,6 +9,7 @@
 #Description: This syntax creates a Shiny application that allows the... 
 #user to visualise mental health data in a variety of ways.
 
+
 ### SECTION 3: USER INTERFACE ----
 
 
@@ -1298,73 +1299,4 @@ fluidPage(
                      label = "Download glossary", 
                      class = "glossaryeight"),
       tags$head(
-        tags$style(".glossaryeight { background-color: #0072B2; } 
-                     .glossaryeight { color: #FFFFFF; }")
-      ),
-      
-      #Statistical disclosure control note.
-      p(br(),
-        tags$b(
-          "Note: Statistical disclosure control has been applied to protect 
-            patient confidentiality. As a result, the figures presented here 
-            may not be additive and may differ from previous 
-            sources of information."
-        )),
-      p(""),
-      wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                             border: 0px solid #336699; }"),
-                
-                #We are only using one filter here, which contains the...
-                #names of the files.
-                #We also insert the 'Download as .csv' button.
-                column(6,
-                       shinyWidgets::pickerInput(
-                         inputId = "table_filenames", 
-                         label = "Select data file",  
-                         choices = c("Trends in diagnoses (Data explorer)",
-                                     "Geography (Data explorer)",
-                                     "Age/sex (Data explorer)", 
-                                     "Deprivation - SIMD quintiles (Data explorer)",
-                                     "Deprivation - Relative Index of Inequality (Data explorer)",
-                                     "Cross-boundary flow (Data explorer)",
-                                     "Readmissions (Data explorer)",
-                                     "Activity by hospital (Trend data)",
-                                     "Length of stay (Trend data)"), 
-                         width = "95%"
-                       )
-                ), 
-                
-                column(4,
-                       downloadButton(outputId = 'download_table', 
-                                      label = 'Download as .csv', 
-                                      class = "mytablebutton", 
-                                      style = "margin: 25px 10px 25px 10px")
-                )
-      ),
-      
-      tags$head(
-        tags$style(".mytablebutton { background-color: #0072B2; } 
-                     .mytablebutton { color: #FFFFFF; }")
-      ),
-      
-      #Finally, insert the actual table.
-      mainPanel(width = 12, 
-                dataTableOutput("table_tab"),
-                br(),
-                #Add a button that allows the user to go back to the top of the...
-                #page.
-                tags$a(href = '#table_top', 
-                       icon("circle-arrow-up", 
-                            lib = "glyphicon"), 
-                       "Back to top"),
-                br(),
-                br()
-      ) 
-      
-    ) #End of tab panel.
-    
-  ) #End of tab set. 
-  
-) #End of fluid page.
-
-#We are finished with the user interface syntax.
+        tags$style(".glossaryeight { background-color: #0072B2; }
