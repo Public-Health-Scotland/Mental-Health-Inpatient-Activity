@@ -1,6 +1,6 @@
 #Name: Data explorer
 #Author: Nikos Alexandrou
-#Modified: 12/11/2020
+#Modified: 10/11/2021
 #Type: Data visualisation
 #Written on: RStudio
 #Written for: R version 3.6.1 
@@ -33,15 +33,15 @@ fluidPage(
     # 3. Sets the font size for the sentence that appears above the...
     #cross-boundary flow diagram.
     tags$style(HTML(".tabbable > .nav > li > a { 
-                    color: #000000; 
-                    }
-                    .tabbable > .nav > li[class = active] > a {
-                    color: #FFFFFF;
-                    background-color: #0072B2;
-                    }
-                    #flow_text {
-                    font-size: 15px;
-                    }"))
+                      color: #000000; 
+                      }
+                      .tabbable > .nav > li[class = active] > a {
+                      color: #FFFFFF;
+                      background-color: #0072B2;
+                      }
+                      #flow_text {
+                      font-size: 15px;
+                      }"))
   ),
   
   #The following line of code sets the properties of the horizontal lines...
@@ -63,15 +63,15 @@ fluidPage(
       "Introduction", 
       icon = icon("info-circle"), 
       style = "float: top; height: 95%; width: 95%;
-      background-color: #FFFFFF; border: 0px solid #FFFFFF;",
+        background-color: #FFFFFF; border: 0px solid #FFFFFF;",
       h1("Introduction"),
       
       #Explain to the user what each tab visualises.
       #Each tab title is a hyperlink, linking to its respective tab.
       p("The explorer allows you to visualise mental health inpatient 
-        data in a variety of ways. Within each of the following seven 
-        sections, there are filters that let you select the data you are 
-        interested in:"),
+          data in a variety of ways. Within each of the following seven 
+          sections, there are filters that let you select the data you are 
+          interested in:"),
       tags$ul( 
         tags$li(
           tags$b(
@@ -79,7 +79,7 @@ fluidPage(
           ), 
           icon("line-chart"), 
           " - shows changes in mental health conditions over 
-          time."
+            time."
         ),
         tags$li(
           tags$b(
@@ -101,7 +101,7 @@ fluidPage(
           ), 
           icon("bar-chart"),
           " - shows activity across different levels of deprivation as 
-          well as the Relative Index of Inequality as a time trend."
+            well as the Relative Index of Inequality as a time trend."
         ),
         tags$li(
           tags$b(
@@ -109,7 +109,7 @@ fluidPage(
           ),
           icon("exchange"),
           " - shows the relationship between where patients live and 
-          where they are treated."
+            where they are treated."
         ),
         tags$li(
           tags$b(
@@ -129,46 +129,51 @@ fluidPage(
       
       #Insert the standard notes.
       p("When using the data explorer, please take the following 
-        factors into consideration:"),
+          factors into consideration:"),
       tags$ul( 
         tags$li(
           "The explorer visualises information recorded in the Scottish 
-          Morbidity Record 01 (SMR01) and Scottish Morbidity Record 04 
-          (SMR04) datasets. SMR04 includes all inpatients and day cases 
-          admitted to and discharged from psychiatric specialties. SMR01 
-          includes all inpatients and day cases discharged from non-obstetric 
-          and non-psychiatric specialties. For a complete list of 
-          specialties, open the ",
+            Morbidity Record 01 (SMR01) and Scottish Morbidity Record 04 
+            (SMR04) datasets. SMR04 includes all inpatients and day cases 
+            admitted to and discharged from psychiatric specialties. SMR01 
+            includes all inpatients and day cases discharged from non-obstetric 
+            and non-psychiatric specialties. For a complete list of 
+            specialties, open the ",
           tags$a(
             href = "https://www.ndc.scot.nhs.uk/docs/2020-04-23%20Specialty-Codes-and-Values.xlsx", 
             "Specialty Codes and Descriptions document"
           ), 
           " and consult the columns SMR01 and SMR04. Please note that
-          this data release excludes activity in the Learning Disability 
-          specialty. Additionally, SMR01 has been restricted to diagnoses 
-          of 'Mental and behavioural disorders' only, which were identified 
-          using codes F00-F99 from the International Classification of Diseases, 
-          Tenth Revision."
+            this data release excludes activity in the Learning Disability 
+            specialty. Additionally, SMR01 has been restricted to diagnoses 
+            of 'Mental and behavioural disorders' only, which were identified 
+            using codes F00-F99 from the International Classification of Diseases, 
+            Tenth Revision."
         ),
         tags$li(
           "SMR01 and SMR04 data completeness varies from year to year. 
-          As a result, data is provisional and subject to change. For 
-          more information, visit the ", 
+            As a result, data is provisional and subject to change. For 
+            more information, visit the ", 
           tags$a(
-            href = "http://www.isdscotland.org/products-and-Services/Data-Support-and-Monitoring/SMR-Completeness/", 
+            href = "https://beta.isdscotland.org/products-and-services/data-management-hospital-activity/smr-completeness/", 
             "SMR Completeness"
           ),
           " webpage, which contains an Excel file with completeness
-          estimates for all SMR datasets."
+            estimates for all SMR datasets. For this release, data from the State 
+            Hospital (SMR04) was only available up until 31 December 2020 at the
+            time of data extraction. This was due to systems issues at the State
+            Hospital. The average number of State Hospital discharges since 
+            1997/1998 is 140 per year and as such the missing fourth quarter for 
+            2020/2021 should not affect the data significantly."
         ), 
         tags$li(
           "Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented in 
-          this explorer may not be additive and may differ from previous 
-          sources of information. For more information, please refer to 
-          the ",
+            patient confidentiality. As a result, the figures presented in 
+            this explorer may not be additive and may differ from previous 
+            sources of information. For more information, please refer to 
+            the ",
           tags$a(
-            href = "https://beta.isdscotland.org/media/4191/public-health-scotland-statistical-disclosure-control-protocol.pdf", 
+            href = "https://publichealthscotland.scot/publications/statistical-disclosure-protocol/statistical-disclosure-protocol/", 
             "PHS Statistical Disclosure Control Protocol."
           ), 
           ""
@@ -177,20 +182,20 @@ fluidPage(
       
       #Provide a download button for the glossary.
       p("To help you understand the information visualised in the 
-        explorer, we have created a glossary of commonly used terms in
-        mental health care. Click the button below to download the glossary:"),
+          explorer, we have created a glossary of commonly used terms in
+          mental health care. Click the button below to download the glossary:"),
       downloadButton(outputId = "download_glossary_one", 
                      label = "Download glossary", 
                      class = "glossaryone"),
       tags$head(
         tags$style(".glossaryone { background-color: #0072B2; } 
-                   .glossaryone { color: #FFFFFF; }")
+                     .glossaryone { color: #FFFFFF; }")
       ),
       
       #Provide contact details for the team.
       p(br(),
         "If you have any trouble using the explorer or have further 
-        questions about the data, please contact us at:",
+          questions about the data, please contact us at:",
         tags$b(
           tags$a(href = "mailto:phs.mentalhealth@phs.scot", 
                  "phs.mentalhealth@phs.scot.")),
@@ -210,54 +215,53 @@ fluidPage(
       "Trends in diagnoses", 
       icon = icon("line-chart"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Trends in diagnoses", id = 'diagnoses_top'),
       
       #Provide a description for the tab.
       p(HTML("This section allows you to see changes in mental health 
-             conditions over time. The period covered is financial years 
-             1997/1998 - 2019/2020. Use the filters to visualise the data you 
-             are interested in. You can visualise multiple health boards of 
-             treatment at the same time. To view your data selection in a table,
-             use the <a href = '#diagnoses_link'> 'Show/hide table' </a> 
-             button at the bottom of the page. To download your data selection 
-             as a .csv file, use the 'Download as .csv' button under the filters. 
-             At the top-right corner of the graph, you will see a toolbar with 
-             four buttons:")),
+               conditions since 1997/1998. Use the filters to visualise the data you 
+               are interested in. You can visualise multiple health boards of 
+               treatment at the same time. To view your data selection in a table,
+               use the <a href = '#diagnoses_link'> 'Show/hide table' </a> 
+               button at the bottom of the page. To download your data selection 
+               as a .csv file, use the 'Download as .csv' button under the filters. 
+               At the top-right corner of the graph, you will see a toolbar with 
+               four buttons:")),
       
       #Insert instructions on how to use the plotly toolbar.
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"), 
                 " - click this button to save the graph as an image 
-                (please note that Internet Explorer does not support this 
-                function)."),
+                  (please note that Internet Explorer does not support this 
+                  function)."),
         tags$li(tags$b("Zoom"), 
                 icon("search"), 
                 " - zoom into the graph by clicking this button and then 
-                clicking and dragging your mouse over the area of the 
-                graph you are interested in."),  
+                  clicking and dragging your mouse over the area of the 
+                  graph you are interested in."),  
         tags$li(tags$b("Pan"), 
                 icon("move", lib = "glyphicon"), 
                 " - adjust the axes of the graph by clicking this button 
-                and then clicking and moving your mouse in any direction
-                you want."),  
+                  and then clicking and moving your mouse in any direction
+                  you want."),  
         tags$li(tags$b("Reset axes"), 
                 icon("home"), 
                 " - click this button to return the axes to their 
-                default range.")
+                  default range.")
       ),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you 
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you 
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_two", 
                      label = "Download glossary", 
                      class = "glossarytwo"),
       tags$head(
         tags$style(".glossarytwo { background-color: #0072B2; } 
-                   .glossarytwo { color: #FFFFFF; }")
+                     .glossarytwo { color: #FFFFFF; }")
       ),
       
       #Repeat the standard note regarding disclosure control from the...
@@ -268,21 +272,21 @@ fluidPage(
         tags$b("Notes:"),
         br(),
         tags$b("1. Statistical disclosure control has been applied to protect 
-               patient confidentiality. As a result, the figures presented here 
-               may not be additive and may differ from previous 
-               sources of information."),
+                 patient confidentiality. As a result, the figures presented here 
+                 may not be additive and may differ from previous 
+                 sources of information."),
         br(),
         tags$b("2. When viewing data for psychiatric specialties in the 'Trends in 
-               diagnoses' page, please keep in mind that only people with a primary diagnosis 
-               of F00-F99 (International Classification of Diseases, Tenth Revision) 
-               have been included. By contrast, all other psychiatric specialty 
-               data in this publication includes both F and non-F codes. As a result, 
-               the psychiatric specialty figures presented in the 'Trends in diagnoses' 
-               page are not comparable with the psychiatric specialty figures elsewhere 
-               in this statistical release.")),
+                 diagnoses' page, please keep in mind that only people with a primary diagnosis 
+                 of F00-F99 (International Classification of Diseases, Tenth Revision) 
+                 have been included. By contrast, all other psychiatric specialty 
+                 data in this publication includes both F and non-F codes. As a result, 
+                 the psychiatric specialty figures presented in the 'Trends in diagnoses' 
+                 page are not comparable with the psychiatric specialty figures elsewhere 
+                 in this statistical release.")),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Insert the filters.
                 #We have five filters in total.
@@ -336,8 +340,8 @@ fluidPage(
                                       class = "mytimetrendbutton"),
                        tags$head(
                          tags$style(".mytimetrendbutton { background-color: 
-                                    #0072B2; } 
-                                    .mytimetrendbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .mytimetrendbutton { color: #FFFFFF; }")
                        )
                 )
       ),
@@ -351,8 +355,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#diagnoses'
-                     class = 'btn btn-primary' id = 'diagnoses_link'> 
-                     <strong> Show/hide table </strong></button>"),
+                       class = 'btn btn-primary' id = 'diagnoses_link'> 
+                       <strong> Show/hide table </strong></button>"),
                 HTML("<div id = 'diagnoses' class = 'collapse'>"),
                 br(),
                 dataTableOutput("diagnoses_table"),
@@ -378,41 +382,41 @@ fluidPage(
       "Geography", 
       icon = icon("globe"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Geography", id = 'geography_top'),
       
       #Provide a description for the tab.
       p(HTML("This section contains an interactive map that presents data broken 
-             down by council area of residence. Use the filters to visualise the 
-             data you are interested in. Click on a council area on the map to 
-             reveal the rate of patients/discharges. To view the data in a table, 
-             use the <a href = '#geographies_link'> 'Show/hide table' </a> button 
-             at the bottom of the page. To download your data selection as a .csv 
-             file, use the 'Download as .csv' button next to the filters.")),
+               down by council area of residence. Use the filters to visualise the 
+               data you are interested in. Click on a council area on the map to 
+               reveal the rate of patients/discharges. To view the data in a table, 
+               use the <a href = '#geographies_link'> 'Show/hide table' </a> button 
+               at the bottom of the page. To download your data selection as a .csv 
+               file, use the 'Download as .csv' button next to the filters.")),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you 
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you 
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_three", 
                      label = "Download glossary", 
                      class = "glossarythree"),
       tags$head(
         tags$style(".glossarythree { background-color: #0072B2; } 
-                   .glossarythree { color: #FFFFFF; }")
+                     .glossarythree { color: #FFFFFF; }")
       ),
       
       #Repeat the standard note regarding disclosure control.
       p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Insert the filters.
                 #We have three filters in total.
@@ -442,7 +446,7 @@ fluidPage(
                          inputId = "geography_financial_years",
                          label = "Select financial year",
                          choices = geography_fin_years,
-                         selected = "2019/2020"
+                         selected = "2020/2021"
                        )
                 ),
                 
@@ -453,8 +457,8 @@ fluidPage(
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
                          tags$style(".mygeographybutton { background-color: 
-                                    #0072B2; } 
-                                    .mygeographybutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .mygeographybutton { color: #FFFFFF; }")
                        )
                 )
       ),
@@ -467,8 +471,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#geographies'
-                     class = 'btn btn-primary' id = 'geographies_link'> 
-                     <strong> Show/hide table </strong></button>"),
+                       class = 'btn btn-primary' id = 'geographies_link'> 
+                       <strong> Show/hide table </strong></button>"),
                 HTML("<div id = 'geographies' class = 'collapse'>"),
                 br(),
                 dataTableOutput("geography_table"),
@@ -495,65 +499,65 @@ fluidPage(
       "Age/sex", 
       icon = icon("child"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Age/sex", id = 'age_sex_top'),
       
       #Provide a description for the tab.
       p(HTML("This section allows you to explore the age and sex distribution 
-             of the data. Use the filters to visualise the data you are 
-             interested in. To view your data selection in a table, use the 
-             <a href = '#age_and_sex_link'> 'Show/hide table' </a> button at 
-             the bottom of the page. To download your data selection as a .csv 
-             file, use the 'Download as .csv' button under the filters. At the 
-             top-right corner of the graph, you will see a toolbar with four 
-             buttons:")),
+               of the data. Use the filters to visualise the data you are 
+               interested in. To view your data selection in a table, use the 
+               <a href = '#age_and_sex_link'> 'Show/hide table' </a> button at 
+               the bottom of the page. To download your data selection as a .csv 
+               file, use the 'Download as .csv' button under the filters. At the 
+               top-right corner of the graph, you will see a toolbar with four 
+               buttons:")),
       
       #Insert instructions on how to use the plotly toolbar.
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
                 " - click this button to save the graph as an image 
-                (please note that Internet Explorer does not support 
-                this function)."),
+                  (please note that Internet Explorer does not support 
+                  this function)."),
         tags$li(tags$b("Zoom"), 
                 icon("search"),
                 " - zoom into the graph by clicking this button and then 
-                clicking and dragging your mouse over the area of the 
-                graph you are interested in."),  
+                  clicking and dragging your mouse over the area of the 
+                  graph you are interested in."),  
         tags$li(tags$b("Pan"), 
                 icon("move", lib = "glyphicon"),
                 " - adjust the axes of the graph by clicking this button
-                and then clicking and moving your mouse in any 
-                direction you want."),
+                  and then clicking and moving your mouse in any 
+                  direction you want."),
         tags$li(tags$b("Reset axes"), 
                 icon("home"),
                 " - click this button to return the axes to their 
-                default range.")
+                  default range.")
       ),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_four", 
                      label = "Download glossary", 
                      class = "glossaryfour"),
       tags$head(
         tags$style(".glossaryfour { background-color: #0072B2; } 
-                   .glossaryfour { color: #FFFFFF; }")
+                     .glossaryfour { color: #FFFFFF; }")
       ),
       
       #Repeat the point regarding disclosure control.
       p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Insert the filters.                                                
                 #We have five filters in total.
@@ -587,7 +591,7 @@ fluidPage(
                          inputId = "age_sex_financial_year",
                          label = "Select financial year", 
                          choices = as_financial_years,
-                         selected = "2019/2020"
+                         selected = "2020/2021"
                        )
                 ),
                 
@@ -606,8 +610,8 @@ fluidPage(
                                       class = "myagesexbutton"),
                        tags$head(
                          tags$style(".myagesexbutton { background-color: 
-                                    #0072B2; } 
-                                    .myagesexbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .myagesexbutton { color: #FFFFFF; }")
                        )
                 )
       ),
@@ -621,8 +625,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#ageandsex'
-                     class = 'btn btn-primary' id = 'age_and_sex_link'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'age_and_sex_link'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'ageandsex' class = 'collapse'>"),
                 br(),
                 dataTableOutput("age_sex_table"),
@@ -649,70 +653,70 @@ fluidPage(
       "Deprivation", 
       icon = icon("bar-chart"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Deprivation", id = 'depr_top'),
       
       #Provide a description for the tab.
       p(HTML("This section contains two graphs, both revolving around 
-             deprivation. The <a href = '#quintile_graph_link'> first graph </a> 
-             shows inpatient activity broken down by 
-             deprivation quintile, whereas the 
-             <a href = '#RII_trend_link'> second graph </a> displays the Relative 
-             Index of Inequality as a trend over time. Use the filters to visualise
-             the data you are interested in. It is possible to select multiple 
-             health boards of residence in the first graph. To view your data 
-             selection in a table, use the 
-             <a href = '#RII_link'> 'Show/hide table' </a> button under each 
-             graph. To download your data selection as a .csv file, use the 
-             'Download as .csv' button created for each graph. At the top-right 
-             corner of each graph, you will see a toolbar with four buttons:")),
+               deprivation. The <a href = '#quintile_graph_link'> first graph </a> 
+               shows inpatient activity broken down by 
+               deprivation quintile, whereas the 
+               <a href = '#RII_trend_link'> second graph </a> displays the Relative 
+               Index of Inequality as a trend over time. Use the filters to visualise
+               the data you are interested in. It is possible to select multiple 
+               health boards of residence in the first graph. To view your data 
+               selection in a table, use the 
+               <a href = '#RII_link'> 'Show/hide table' </a> button under each 
+               graph. To download your data selection as a .csv file, use the 
+               'Download as .csv' button created for each graph. At the top-right 
+               corner of each graph, you will see a toolbar with four buttons:")),
       
       #Insert instructions on how to use the plotly toolbar.
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
                 " - click this button to save the graph as an image 
-                (please note that Internet Explorer does not support this
-                function)."),
+                  (please note that Internet Explorer does not support this
+                  function)."),
         tags$li(tags$b("Zoom"), 
                 icon("search"),
                 " - zoom into the graph by clicking this button and then 
-                clicking and dragging your mouse over the area of the 
-                graph you are interested in."),  
+                  clicking and dragging your mouse over the area of the 
+                  graph you are interested in."),  
         tags$li(tags$b("Pan"), 
                 icon("move", lib = "glyphicon"),
                 " - adjust the axes of the graph by clicking this button 
-                and then clicking and moving your mouse in any 
-                direction you want."),
+                  and then clicking and moving your mouse in any 
+                  direction you want."),
         tags$li(tags$b("Reset axes"), 
                 icon("home"),
                 " - click this button to return the axes to their 
-                default range.")
+                  default range.")
       ),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_five", 
                      label = "Download glossary", 
                      class = "glossaryfive"),
       tags$head(
         tags$style(".glossaryfive { background-color: #0072B2; } 
-                   .glossaryfive { color: #FFFFFF; }")
+                     .glossaryfive { color: #FFFFFF; }")
       ),
       
       #Repeat the disclosure control note.
       p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Since this page contains two graphs and, therefore, two...
                 #distinct sections, we can insert a title for each section to...
@@ -756,7 +760,7 @@ fluidPage(
                          inputId = "deprivation_financial_year",
                          label = "Select financial year", 
                          choices = depr_financial_years, 
-                         selected = "2019/2020"
+                         selected = "2020/2021"
                        )
                 ),
                 
@@ -775,8 +779,8 @@ fluidPage(
                                       class = "mydeprivationbutton"),
                        tags$head(
                          tags$style(".mydeprivationbutton { background-color: 
-                                    #0072B2; } 
-                                    .mydeprivationbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .mydeprivationbutton { color: #FFFFFF; }")
                        )
                 )
       ),
@@ -790,8 +794,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#depr'
-                     class = 'btn btn-primary' id = 'depr_link'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'depr_link'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'depr' class = 'collapse'>"),
                 br(),
                 dataTableOutput("deprivation_table"),
@@ -849,7 +853,7 @@ fluidPage(
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
                          tags$style(".myRIIbutton { background-color: #0072B2; } 
-                                    .myRIIbutton { color: #FFFFFF; }")
+                                      .myRIIbutton { color: #FFFFFF; }")
                        )
                 ),
                 br(),
@@ -870,8 +874,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#RII'
-                     class = 'btn btn-primary' id = 'RII_link'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'RII_link'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'RII' class = 'collapse'>"),
                 br(),
                 dataTableOutput("RII_table"),
@@ -899,41 +903,41 @@ fluidPage(
       "Cross-boundary flow", 
       icon = icon("exchange"),  
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Cross-boundary flow", id = 'cbf_top'),
       
       #Provide a description for the tab.
       p(HTML("The following diagram shows you how many patients living in the 
-             selected NHS board of residence were treated outside their board. 
-             Use the filters to visualise the data you are interested in. To 
-             view your data selection in a table, use the <a href = '#flow_link'> 
-             'Show/hide table' </a> button at the bottom of the page. To 
-             download your data selection as a .csv file, use the 'Download as .csv'
-             button next to the filters.")),
+               selected NHS board of residence were treated outside their board. 
+               Use the filters to visualise the data you are interested in. To 
+               view your data selection in a table, use the <a href = '#flow_link'> 
+               'Show/hide table' </a> button at the bottom of the page. To 
+               download your data selection as a .csv file, use the 'Download as .csv'
+               button next to the filters.")),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_six", 
                      label = "Download glossary", 
                      class = "glossarysix"),
       tags$head(
         tags$style(".glossarysix { background-color: #0072B2; } 
-                   .glossarysix { color: #FFFFFF; }")
+                     .glossarysix { color: #FFFFFF; }")
       ),
       
       #Repeat the disclosure control note.
       p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Insert the filters.                                             
                 #We are using three filters, arranged in two columns.
@@ -962,7 +966,7 @@ fluidPage(
                          inputId = "flow_financial_year",
                          label = "Select financial year", 
                          choices = fl_financial_years, 
-                         selected = "2019/2020"
+                         selected = "2020/2021"
                        )
                 ),
                 
@@ -973,8 +977,8 @@ fluidPage(
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
                          tags$style(".myflowbutton { background-color: 
-                                    #0072B2; } 
-                                    .myflowbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .myflowbutton { color: #FFFFFF; }")
                        )
                 )
       ),
@@ -993,8 +997,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#flow'
-                     class = 'btn btn-primary' id = 'flow_link'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'flow_link'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'flow' class = 'collapse'>"),
                 br(),
                 dataTableOutput("flow_table"),
@@ -1021,56 +1025,56 @@ fluidPage(
       "Readmissions", 
       icon = icon("bed"), 
       style = "height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;",
+        border: 0px solid #FFFFFF;",
       h1("Readmissions", id = 'readm_top'),
       
       #Provide a description for the tab.
       p(HTML("This section presents percentage readmissions within 28 and 133 
-             days after discharge. There are two graphs in this page: the 
-             <a href = '#readm_HB_comparison_link'> first one </a> allows you to 
-             compare multiple health boards of treatment in a 
-             single year, whereas the <a href = '#readm_trend_link'> second one </a> 
-             is a time trend for each board. Use the filters to visualise the data 
-             you are interested in. It is possible to select multiple health boards 
-             in the second graph. To view your data selection in a table, use the 
-             <a href = '#read_link_two'> 'Show/hide table' </a> button under each 
-             graph. To download your data selection as a .csv file, use the 
-             'Download as .csv' button next to each set of filters. At the top-right 
-             corner of each graph, you will see a toolbar with four buttons:")),
+               days after discharge. There are two graphs in this page: the 
+               <a href = '#readm_HB_comparison_link'> first one </a> allows you to 
+               compare multiple health boards of treatment in a 
+               single year, whereas the <a href = '#readm_trend_link'> second one </a> 
+               is a time trend for each board. Use the filters to visualise the data 
+               you are interested in. It is possible to select multiple health boards 
+               in the second graph. To view your data selection in a table, use the 
+               <a href = '#read_link_two'> 'Show/hide table' </a> button under each 
+               graph. To download your data selection as a .csv file, use the 
+               'Download as .csv' button next to each set of filters. At the top-right 
+               corner of each graph, you will see a toolbar with four buttons:")),
       
       #Instructions on how to use the plotly toolbar.
       tags$ul(
         tags$li(tags$b("Download plot as a png"), 
                 icon("camera"),
                 " - click this button to save the graph as an image 
-                (please note that Internet Explorer does not support this
-                function)."),
+                  (please note that Internet Explorer does not support this
+                  function)."),
         tags$li(tags$b("Zoom"), 
                 icon("search"),
                 " - zoom into the graph by clicking this button and then 
-                clicking and dragging your mouse over the area of the 
-                graph you are interested in."),  
+                  clicking and dragging your mouse over the area of the 
+                  graph you are interested in."),  
         tags$li(tags$b("Pan"), 
                 icon("move", lib = "glyphicon"),
                 " - adjust the axes of the graph by clicking this button 
-                and then clicking and moving your mouse in any 
-                direction you want."),
+                  and then clicking and moving your mouse in any 
+                  direction you want."),
         tags$li(tags$b("Reset axes"), 
                 icon("home"),
                 " - click this button to return the axes to their 
-                default range.")
+                  default range.")
       ),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_seven", 
                      label = "Download glossary", 
                      class = "glossaryseven"),
       tags$head(
         tags$style(".glossaryseven { background-color: #0072B2; } 
-                   .glossaryseven { color: #FFFFFF; }")
+                     .glossaryseven { color: #FFFFFF; }")
       ),
       
       #Repeat the disclosure control note and add another note to clarify...
@@ -1080,19 +1084,19 @@ fluidPage(
         br(),
         tags$b(
           "1. Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         ),
         br(), 
         tags$b(
           "2. Only readmissions in the following psychiatric specialties are 
-          included in this page: G1 - General Psychiatry and G4 – Psychiatry of 
-          Old Age."
+            included in this page: G1 - General Psychiatry and G4 – Psychiatry of 
+            Old Age."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #Since this page contains two graphs and, therefore, two...
                 #distinct sections, we can insert a title for each section to...
@@ -1123,7 +1127,7 @@ fluidPage(
                          inputId = "readmissions_financial_year",
                          label = "Select financial year", 
                          choices = readm_financial_years, 
-                         selected = "2019/2020"
+                         selected = "2020/2021"
                        )
                 ),
                 
@@ -1143,8 +1147,8 @@ fluidPage(
                                       style = "margin: 25px 10px 25px 10px"),
                        tags$head(
                          tags$style(".myfirstreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .myfirstreadmbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .myfirstreadmbutton { color: #FFFFFF; }")
                        )
                 )),
       
@@ -1155,8 +1159,8 @@ fluidPage(
                              width = "1090px",
                              height = "600px"),
                 HTML("<button data-toggle = 'collapse' href = '#read'
-                     class = 'btn btn-primary' id = 'read_link'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'read_link'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'read' class = 'collapse'>"),
                 br(),
                 dataTableOutput("first_readm_table"),
@@ -1225,8 +1229,8 @@ fluidPage(
                                       style = "margin: 10px 0px 0px 0px"),
                        tags$head(
                          tags$style(".mysecondreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .mysecondreadmbutton { color: #FFFFFF; }")
+                                      #0072B2; } 
+                                      .mysecondreadmbutton { color: #FFFFFF; }")
                        )
                 ),
                 br(),
@@ -1247,8 +1251,8 @@ fluidPage(
                 br(),
                 br(),
                 HTML("<button data-toggle = 'collapse' href = '#read_two'
-                     class = 'btn btn-primary' id = 'read_link_two'> 
-                     <strong>Show/hide table</strong></button>"),
+                       class = 'btn btn-primary' id = 'read_link_two'> 
+                       <strong>Show/hide table</strong></button>"),
                 HTML("<div id = 'read_two' class = 'collapse'>"),
                 br(),
                 dataTableOutput("second_readm_table"),
@@ -1275,40 +1279,40 @@ fluidPage(
       "Table", 
       icon = icon("table"), 
       style = "float: top; height: 95%; width: 95%; background-color: #FFFFFF; 
-      border: 0px solid #FFFFFF;", 
+        border: 0px solid #FFFFFF;", 
       h1("Table", id = 'table_top'),
       
       #Provide a description for the tab.
       p("This section allows you to view the data in table format. Use the  
-        'Select data file' filter to visualise the file you are interested in 
-        (the list includes data files used in the 'Trend data' page). You can then
-        click on the filters below the column names of the table and use the 
-        dropdowns to modify the table. To download your data selection as a .csv 
-        file, use the 'Download as .csv' button."),
+          'Select data file' filter to visualise the file you are interested in 
+          (the list includes data files used in the 'Trend data' page). You can then
+          click on the filters below the column names of the table and use the 
+          dropdowns to modify the table. To download your data selection as a .csv 
+          file, use the 'Download as .csv' button."),
       
       #Download button for the glossary.
       p("You can also download our glossary of commonly used terms in
-        mental health care, which has been created to help you
-        understand the information visualised in the explorer:"),
+          mental health care, which has been created to help you
+          understand the information visualised in the explorer:"),
       downloadButton(outputId = "download_glossary_eight", 
                      label = "Download glossary", 
                      class = "glossaryeight"),
       tags$head(
         tags$style(".glossaryeight { background-color: #0072B2; } 
-                   .glossaryeight { color: #FFFFFF; }")
+                     .glossaryeight { color: #FFFFFF; }")
       ),
       
       #Statistical disclosure control note.
       p(br(),
         tags$b(
           "Note: Statistical disclosure control has been applied to protect 
-          patient confidentiality. As a result, the figures presented here 
-          may not be additive and may differ from previous 
-          sources of information."
+            patient confidentiality. As a result, the figures presented here 
+            may not be additive and may differ from previous 
+            sources of information."
         )),
       p(""),
       wellPanel(tags$style(".well { background-color: #FFFFFF; 
-                           border: 0px solid #336699; }"),
+                             border: 0px solid #336699; }"),
                 
                 #We are only using one filter here, which contains the...
                 #names of the files.
@@ -1340,7 +1344,7 @@ fluidPage(
       
       tags$head(
         tags$style(".mytablebutton { background-color: #0072B2; } 
-                   .mytablebutton { color: #FFFFFF; }")
+                     .mytablebutton { color: #FFFFFF; }")
       ),
       
       #Finally, insert the actual table.

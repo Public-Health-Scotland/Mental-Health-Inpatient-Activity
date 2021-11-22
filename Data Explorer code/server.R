@@ -1,6 +1,6 @@
 #Name: Data explorer
 #Author: Nikos Alexandrou
-#Modified: 12/11/2020
+#Modified: 10/11/2021
 #Type: Data visualisation
 #Written on: RStudio
 #Written for: R version 3.6.1 
@@ -9,13 +9,14 @@
 #Description: This syntax creates a Shiny application that allows the... 
 #user to visualise mental health data in a variety of ways.
 
+
 ### SECTION 2: SERVER ----
 
 
 #A Shiny app needs two things: the Server and the User Interface. 
 #We can begin with the Server.
 function(input, output, session) {
-  
+
   ##* ObserveEvent() commands ----
   
   #These observeEvent() commands will be combined with action buttons in...
@@ -551,7 +552,7 @@ function(input, output, session) {
                        duplicateGeoms = TRUE)
   
   #Create a subset of the dataset which looks at rate of patients in...
-  #psychiatric specialties in 2019/2020.
+  #psychiatric specialties in 2020/2021.
   #This subset will form the basis of our first map.
   #And then, whenever the user makes a new selection, this initial map will...
   #be overwritten by a new one, using the command leafletProxy().
@@ -561,7 +562,7 @@ function(input, output, session) {
   #boundaries and the legend, and create new ones.
   ca_data_init_selection <- subset(ca_data,
                                    dataset == "Psychiatric"  
-                                   & fyear == "2019/2020"  
+                                   & fyear == "2020/2021"  
                                    & measure == "Rate of patients (per 100,000 population)")
   
   output$mymap <- renderLeaflet({
@@ -633,96 +634,98 @@ function(input, output, session) {
   })
   
   #Open an observer so that leafletProxy() can react to the user's selections.
-  observe({
-    
-    #Create a new subset of the dataset according to the user's selections...
-    #beyond the initial map.
-    ca_data_new <- subset(ca_data,
-                          dataset == input$geography_datasets  
-                          & fyear == input$geography_financial_years  
-                          & measure == input$geography_measure_type)
-    
-    #leafletProxy() will now build upon/overwrite our initial map.
-    leafletProxy("mymap", session) %>%
-      
-      #Clear all previous polygons.
-      clearShapes() %>%
-      
-      #Clear the previous legend.
-      clearControls() %>%
-      
-      #Add the new polygons and tooltip, which have the same format as...
-      #above.
-      addPolygons(data = ca_data_new,
-                  stroke = TRUE,
-                  weight = 2, 
-                  smoothFactor = 0.5, 
-                  opacity = 1, 
-                  fillOpacity = 1, 
-                  highlightOptions = highlightOptions(color = "#000000", 
-                                                      weight = 5),
-                  color = "#000000", 
-                  fillColor = colorNumeric(palette = "Blues", 
-                                           domain = ca_data_new$Value)(ca_data_new$Value),
-                  popup = paste0("Council area of residence: ",
-                                 ca_data_new$NAME,
-                                 "<br>", 
-                                 "Treatment specialty: ",
-                                 ca_data_new$dataset,
-                                 "<br>", 
-                                 "Financial year: ",
-                                 ca_data_new$fyear,
-                                 "<br>",
-                                 input$geography_measure_type, 
-                                 ": ",
-                                 ca_data_new$Value)) %>%
-      
-      #Add the new legend, which, again, has the same format as the...
-      #legend of the initial map.
-      #The map is now finished.
-      addLegend(position = "topright", 
-                pal = colorNumeric("Blues", ca_data_new$Value), 
-                values = ca_data_new$Value,
-                title = paste0(
-                  if(input$geography_measure_type == 
-                     "Rate of discharges (per 100,000 population)")
-                  {paste0("Rate of discharges",
-                          "<br>", 
-                          "(per 100,000 population)",
-                          "<br>",
-                          "from ")}
-                  else{paste0("Rate of patients",
-                              "<br>", 
-                              "(per 100,000 population)",
-                              "<br>",
-                              "in ")},
-                  if(input$geography_datasets == "Psychiatric") 
-                  {paste0("psychiatric specialties",
-                          "<br>",
-                          "in ", 
-                          first(as.vector(ca_data_new$fyear)), 
-                          ", by council area",
-                          "<br>",
-                          "of residence")}
-                  else if(input$geography_datasets == "Non-psychiatric") 
-                  {paste0("non-psychiatric specialties",
-                          "<br>",
-                          "in ",
-                          first(as.vector(ca_data_new$fyear)), 
-                          ", by council area",
-                          "<br>",
-                          "of residence")}
-                  else{paste0("any treatment specialty",
-                              "<br>",
-                              "in ",
-                              first(as.vector(ca_data_new$fyear)), 
-                              ", by council area",
-                              "<br>",
-                              "of residence")}
-                ),
-                opacity = 1) 
-    
-  })
+  observeEvent(c(input$geography_datasets, 
+                 input$geography_financial_years, 
+                 input$geography_measure_type), {
+                   
+                   #Create a new subset of the dataset according to the user's selections...
+                   #beyond the initial map.
+                   ca_data_new <- subset(ca_data,
+                                         dataset == input$geography_datasets  
+                                         & fyear == input$geography_financial_years  
+                                         & measure == input$geography_measure_type)
+                   
+                   #leafletProxy() will now build upon/overwrite our initial map.
+                   leafletProxy("mymap", session) %>%
+                     
+                     #Clear all previous polygons.
+                     clearShapes() %>%
+                     
+                     #Clear the previous legend.
+                     clearControls() %>%
+                     
+                     #Add the new polygons and tooltip, which have the same format as...
+                     #above.
+                     addPolygons(data = ca_data_new,
+                                 stroke = TRUE,
+                                 weight = 2, 
+                                 smoothFactor = 0.5, 
+                                 opacity = 1, 
+                                 fillOpacity = 1, 
+                                 highlightOptions = highlightOptions(color = "#000000", 
+                                                                     weight = 5),
+                                 color = "#000000", 
+                                 fillColor = colorNumeric(palette = "Blues", 
+                                                          domain = ca_data_new$Value)(ca_data_new$Value),
+                                 popup = paste0("Council area of residence: ",
+                                                ca_data_new$NAME,
+                                                "<br>", 
+                                                "Treatment specialty: ",
+                                                ca_data_new$dataset,
+                                                "<br>", 
+                                                "Financial year: ",
+                                                ca_data_new$fyear,
+                                                "<br>",
+                                                input$geography_measure_type, 
+                                                ": ",
+                                                ca_data_new$Value)) %>%
+                     
+                     #Add the new legend, which, again, has the same format as the...
+                     #legend of the initial map.
+                     #The map is now finished.
+                     addLegend(position = "topright", 
+                               pal = colorNumeric("Blues", ca_data_new$Value), 
+                               values = ca_data_new$Value,
+                               title = paste0(
+                                 if(input$geography_measure_type == 
+                                    "Rate of discharges (per 100,000 population)")
+                                 {paste0("Rate of discharges",
+                                         "<br>", 
+                                         "(per 100,000 population)",
+                                         "<br>",
+                                         "from ")}
+                                 else{paste0("Rate of patients",
+                                             "<br>", 
+                                             "(per 100,000 population)",
+                                             "<br>",
+                                             "in ")},
+                                 if(input$geography_datasets == "Psychiatric") 
+                                 {paste0("psychiatric specialties",
+                                         "<br>",
+                                         "in ", 
+                                         first(as.vector(ca_data_new$fyear)), 
+                                         ", by council area",
+                                         "<br>",
+                                         "of residence")}
+                                 else if(input$geography_datasets == "Non-psychiatric") 
+                                 {paste0("non-psychiatric specialties",
+                                         "<br>",
+                                         "in ",
+                                         first(as.vector(ca_data_new$fyear)), 
+                                         ", by council area",
+                                         "<br>",
+                                         "of residence")}
+                                 else{paste0("any treatment specialty",
+                                             "<br>",
+                                             "in ",
+                                             first(as.vector(ca_data_new$fyear)), 
+                                             ", by council area",
+                                             "<br>",
+                                             "of residence")}
+                               ),
+                               opacity = 1) 
+                   
+                 })
   
   #This reactive() creates the subset that will be used to populate the table...
   #appearing under the map.
