@@ -2,4 +2,4 @@ In this folder you can find the R code that was used to produce the Data explore
 
 The data explorer and the basefiles that were used to create it can be accessed via the following link (see the 'Data explorer' and 'Open Data and Data Files' sections): https://www.publichealthscotland.scot/publications/mental-health-inpatient-activity/
 
-To create the explorer, place all the base files in your working directory, and then combine the three parts (data manipulation, server and ui) into a single script and run it.
+To create the explorer, place all the base files in your working directory, and then combine the three parts (data manipulation, server and ui, in that order) into a single script and run it.
