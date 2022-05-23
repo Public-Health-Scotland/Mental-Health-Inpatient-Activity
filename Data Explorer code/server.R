@@ -15,7 +15,7 @@
 
 #A Shiny app needs two things: the Server and the User Interface. 
 #We can begin with the Server.
-function(input, output, session) {
+server <- function(input, output, session) {
 
   ##* ObserveEvent() commands ----
   

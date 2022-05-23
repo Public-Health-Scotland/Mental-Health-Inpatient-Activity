@@ -15,7 +15,7 @@
 #Moving on to the User Interface (UI) side of things.
 
 #Create the fluidPage that will house the data explorer.
-fluidPage(
+ui <- fluidPage(
   style = "width: 100%; height: 100%; max-width: 1200px;", 
   tags$head( 
     tags$style(
@@ -1368,3 +1368,4 @@ fluidPage(
 ) #End of fluid page.
 
 #We are finished with the user interface syntax.
+shinyApp(ui = ui, server = server)
