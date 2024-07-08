@@ -40,26 +40,85 @@ pub_date <- "20231212"
 # Read in data prep file ----
 source('data_preparation.R', local = TRUE)
 
+
+
 # #* Read in credentials for password-protecting the app ----
 # credentials <- readRDS("admin/credentials.rds")
 
-# We can now start building the Shiny app.
-
-
 ### SECTION 2: USER INTERFACE ----
 
-# Source the ui file
+# Create the fluidPage that will house the data explorer. 
+# secure_app( #If password protection is needed.
+ui <- fluidPage(
+  style = "width: 100%; height: 100%; max-width: 1200px;", 
+  tags$head( 
+    tags$style(
+      type = "text/css",
+      
+      # Prevent error messages from popping up on the interface.
+      ".shiny-output-error { visibility: hidden; }", 
+      ".shiny-output-error:before { visibility: hidden; }"
+      
+    ),
+    
+    # The following chunk of code does three things:
+    # 1. Paints the ribbon that contains the tab headers white.
+    # 2. Highlights the header of the active tab in blue.
+    # 3. Sets the font size for the sentence that appears above the...
+    # cross-boundary flow diagram.
+    tags$style(HTML(".tabbable > .nav > li > a { 
+                    color: #000000; 
+                    }
+                    .tabbable > .nav > li[class = active] > a {
+                    color: #FFFFFF;
+                    background-color: #0072B2;
+                    }
+                    #flow_text {
+                    font-size: 15px;
+                    }"))
+  ),
+  
+  # The following line of code sets the properties of the horizontal lines...
+  # we will be inserting below as page breaks.
+  tags$head(tags$style(HTML("hr { border: 1px solid #000000; }"))),
+  
+  # We are going to divide our UI into discrete sections, called tab panels.
+  # To do this, we need the layout "tabsetPanel()".
+  tabsetPanel(
+    id = "Panels", 
+    
+    ## Source the ui files for each tab of the dashboard ----
+    source("modules/ui_00_introduction.R", local = TRUE)$value,
 
-ui <- source('ui.R', local = TRUE)$value
+    source("modules/ui_01_diagnosis_trends.R", local = TRUE)$value,
+    
+    source("modules/ui_02_geography.R", local = TRUE)$value,
+    
+    source("modules/ui_03_agesex.R", local = TRUE)$value,
+    
+    source("modules/ui_04_deprivation.R", local = TRUE)$value,
+    
+    source("modules/ui_05_crossboundary.R", local = TRUE)$value,
+    
+    source("modules/ui_06_readmissions.R", local = TRUE)$value,
+    
+    source("modules/ui_07_table.R", local = TRUE)$value
+
+  ) # End of tab set. 
+
+) # End of ui fluid page.
+
+# ) # End of password-protection.
+
+
+
+# ui <- source('ui.R', local = TRUE)$value
 # Needs $value after source expression for ui to prevent 'TRUE' being printed 
 # at the bottom of the app following R Shiny evaluation sequence
 
 
 ### SECTION 3: SERVER ----
 
-
-# A Shiny app needs two things: the Server and the User Interface.
-# We can begin with the Server.
 server <- function(input, output, session) {
   
   # # * Shinymanager authorisation ----
