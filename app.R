@@ -210,6 +210,16 @@ server <- function(input, output, session) {
   output$download_glossary_seven <- glossary_code_shortcut
   output$download_glossary_eight <- glossary_code_shortcut
   
+  
+  # Keep dashboard active indefinitely to meet accessibility requirements
+  # (Keep at the end of server)
+  auto_invalidate <- reactiveTimer(10000)
+  observe({
+    auto_invalidate()
+    cat(".")
+  })
+  
+  
 }
 
 # We are now finished with the Server syntax.
