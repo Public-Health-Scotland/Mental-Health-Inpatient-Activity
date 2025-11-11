@@ -241,7 +241,8 @@ output$download_geography <- downloadHandler(
                 # Remove row numbers as the .csv file already has row numbers.
                 row.names = FALSE,
                 col.names = c("Treatment specialty", "Financial year", 
-                              "Council area of residence", input$geography_measure_input), "Value", 
+                              "Council area of residence", "Geography measure input", "Value"),
+                              #"Council area of residence", input$geography_measure_input, "Value"), 
                 sep = ",")
   }
 )

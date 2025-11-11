@@ -48,13 +48,10 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you 
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_two", 
+  downloadButton(outputId = "download_glossary_01", 
                  label = "Download glossary", 
-                 class = "glossarytwo"),
-  tags$head(
-    tags$style(".glossarytwo { background-color: #0072B2; } 
-                   .glossarytwo { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
+ 
   
   # Repeat the standard note regarding disclosure control from the...
   # Introduction tab. Add another note that explains the difference between...
@@ -143,9 +140,7 @@ tabPanel(
   # In the main panel of the diagnoses tab, insert the diagnoses line...
   # chart, the 'Show/hide table' button, and the diagnoses table. 
   mainPanel(width = 12,
-            plotlyOutput("diagnoses_plot", 
-                         width = "1090px",
-                         height = "600px"),
+            phs_spinner("diagnoses_plot", "1090px", "600px"),
             br(),
             br(),
             HTML("<button data-toggle = 'collapse' href = '#diagnoses'

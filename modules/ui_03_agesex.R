@@ -47,13 +47,9 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_four", 
+  downloadButton(outputId = "download_glossary_03", 
                  label = "Download glossary", 
-                 class = "glossaryfour"),
-  tags$head(
-    tags$style(".glossaryfour { background-color: #0072B2; } 
-                   .glossaryfour { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
   
   # Repeat the point regarding disclosure control.
   p(br(),
@@ -100,7 +96,8 @@ tabPanel(
                      inputId = "age_sex_financial_year",
                      label = "Select financial year", 
                      choices = as_financial_years,
-                     selected = "2022/2023"
+                     # Choose default option
+                     selected = "2023/2024"
                    )
             ),
             
@@ -128,9 +125,8 @@ tabPanel(
   # In the main panel, we insert the age/sex pyramid, the 'Show/hide... 
   # table' button, and the age/sex table.
   mainPanel(width = 12, 
-            plotlyOutput("age_sex_pyramid", 
-                         width = "1090px",
-                         height = "400px"),
+            # Add chart using custom function that includes spinner aesthetics
+            phs_spinner("age_sex_pyramid", "1090px", "400px"),
             br(),
             br(),
             HTML("<button data-toggle = 'collapse' href = '#ageandsex'

@@ -11,9 +11,23 @@ tabPanel(
   h1("Readmissions", id = 'readm_top'),
   
   # Provide a description for the tab.
-  p(HTML("This section presents percentage readmissions within 28 and 133 
-             days after discharge. There are two graphs in this page: the 
-             <a href = '#readm_HB_comparison_link'> first one </a> allows you to 
+  p("This section presents percentage readmissions within 28 and 133 
+    days after discharge.", 
+    tags$b("Please note that the methodology for this analysis has been updated 
+  in this release.")),
+  p(tags$ul(
+      tags$li("In previous publications data was calculated for the most 
+  recent financial year only and appended to previously published data 
+  for previous years."),
+    tags$li("The analysis now calculates the readmissions within each year 
+            rather than using previously published data for previous years. 
+            As such, data for previous years is likely to change slightly. This will
+  allow a more accurate picture of readmissions since data is not always 
+  complete at time of release."))
+  ),
+  
+  p(HTML("There are two graphs in this page: the 
+        <a href = '#readm_HB_comparison_link'> first one </a> allows you to 
              compare multiple health boards of treatment in a 
              single year, whereas the <a href = '#readm_trend_link'> second one </a> 
              is a time trend for each board. Use the filters to visualise the data 
@@ -23,6 +37,7 @@ tabPanel(
              graph. To download your data selection as a .csv file, use the 
              'Download as .csv' button next to each set of filters. At the top-right 
              corner of each graph, you will see a toolbar with four buttons:")),
+  
   
   # Instructions on how to use the plotly toolbar.
   tags$ul(
@@ -51,13 +66,11 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_seven", 
+  downloadButton(outputId = "download_glossary_06", 
                  label = "Download glossary", 
-                 class = "glossaryseven"),
-  tags$head(
-    tags$style(".glossaryseven { background-color: #0072B2; } 
-                   .glossaryseven { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
+  
+  #
   
   # Repeat the disclosure control note and add another note to clarify...
   # which psychiatric specialties were included in the readmission analysis.
@@ -110,7 +123,7 @@ tabPanel(
                      inputId = "readmissions_financial_year",
                      label = "Select financial year", 
                      choices = readm_financial_years, 
-                     selected = "2022/2023"
+                     selected = "2023/2024"
                    )
             ),
             
@@ -137,10 +150,9 @@ tabPanel(
   
   # Visualise the bar chart, the 'Show/hide table' button, and the table...
   # associated with the bar chart.
-  mainPanel(width = 12, 
-            plotlyOutput("readm_bar_chart", 
-                         width = "1090px",
-                         height = "600px"),
+  mainPanel(width = 12,
+            # Add chart using custom function that includes spinner aesthetics
+            phs_spinner("readm_bar_chart", "1090px", "600px"),
             HTML("<button data-toggle = 'collapse' href = '#read'
                      class = 'btn btn-primary' id = 'read_link'> 
                      <strong>Show/hide table</strong></button>"),
