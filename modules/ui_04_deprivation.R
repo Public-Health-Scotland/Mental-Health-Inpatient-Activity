@@ -11,19 +11,20 @@ tabPanel(
   h1("Deprivation", id = 'depr_top'),
   
   # Provide a description for the tab.
-  p(HTML("This section contains two graphs, both revolving around 
-             deprivation. The <a href = '#quintile_graph_link'> first graph </a> 
-             shows inpatient activity broken down by 
-             deprivation quintile, whereas the 
-             <a href = '#RII_trend_link'> second graph </a> displays the Relative 
-             Index of Inequality (RII) as a trend over time. Use the filters to visualise
-             the data you are interested in. It is possible to select multiple 
-             health boards of residence in the first graph. To view your data 
-             selection in a table, use the 
-             <a href = '#RII_link'> 'Show/hide table' </a> button under each 
-             graph. To download your data selection as a .csv file, use the 
-             'Download as .csv' button created for each graph. At the top-right 
-             corner of each graph, you will see a toolbar with four buttons:")),
+  p(HTML("This section contains two graphs, both revolving around deprivation. 
+         The <a href = '#quintile_graph_link'> first graph </a> 
+         shows inpatient activity broken down by deprivation quintile, whereas the 
+         <a href = '#RII_trend_link'> second graph </a> displays the Relative 
+         Index of Inequality (RII) as a trend over time.")),
+  
+  p(HTML("Use the filters to visualise the data you are interested in. It is 
+         possible to select multiple health boards of residence in the first graph. 
+         To view your data selection in a table, use the 
+         <a href = '#RII_link'> 'Show/hide table' </a> 
+         button under each graph. To download your data selection as a .csv file, 
+         use the 'Download as .csv' button created for each graph. At the top-right 
+         corner of each graph, you will see a toolbar with four buttons:")),
+         
   
   # Insert instructions on how to use the plotly toolbar.
   tags$ul(
@@ -52,13 +53,9 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_five", 
+  downloadButton(outputId = "download_glossary_04", 
                  label = "Download glossary", 
-                 class = "glossaryfive"),
-  tags$head(
-    tags$style(".glossaryfive { background-color: #0072B2; } 
-                   .glossaryfive { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
   
   # Repeat the disclosure control note.
   p(br(),
@@ -114,8 +111,9 @@ tabPanel(
                    shinyWidgets::pickerInput(
                      inputId = "deprivation_financial_year",
                      label = "Select financial year", 
-                     choices = depr_financial_years, 
-                     selected = "2022/2023"
+                     choices = depr_financial_years,
+                     # Choose default option
+                     selected = "2023/2024"
                    )
             ),
             
@@ -143,9 +141,8 @@ tabPanel(
   # Visualise the deprivation bar chart, the 'Show/hide table' button, and...
   # the table associated with the bar chart.
   mainPanel(width = 12,
-            plotlyOutput("deprivation_bar_chart", 
-                         width = "1090px",
-                         height = "450px"),
+            # Add chart using custom function that includes spinner aesthetics
+            phs_spinner("deprivation_bar_chart", "1090px", "450px"),
             br(),
             br(),
             HTML("<button data-toggle = 'collapse' href = '#depr'
@@ -170,7 +167,7 @@ tabPanel(
             hr(),
             
             # Header or title for the second section.
-            h2("Relative Index of Inequality time trend", 
+            h2("Relative Index of Inequality (RII) time trend", 
                id = 'RII_trend_link'),
             br(),
             
@@ -225,9 +222,26 @@ tabPanel(
             plotlyOutput("RII_line_chart", 
                          width = "1090px",
                          height = "600px"),
+            
+            # RII explanation text
+            p("The Relative Index of Inequality (RII) describes the gradient of 
+              health observed across the deprivation scale, relative to the mean 
+              health of the whole population. The RII is the Slope Index of 
+              Inequality (SII) divided by the population mean rate. It is similar 
+              to the range, but takes into consideration the values for all of 
+              the deprivation quintiles and the population size of each quintile."),
+            # RII links
+            p("A more detailed explanation can be found on the ",
+              tags$a("Scottish Public Health Observatory Website",
+                     href = 'https://www.scotpho.org.uk/methods-and-data/measuring-health-inequalities/#siirii',
+                     target = "_blank"),
+              " and the ",
+              tags$a("Scottish Government Website.",
+                     href = 'https://www.gov.scot/publications/long-term-monitoring-health-inequalities-march-2022-report/pages/19/',
+                     target = "_blank")
+              ),
             br(),
-            br(),
-            br(),
+            # Data underneath graph toggle button
             HTML("<button data-toggle = 'collapse' href = '#RII'
                      class = 'btn btn-primary' id = 'RII_link'> 
                      <strong>Show/hide table</strong></button>"),
