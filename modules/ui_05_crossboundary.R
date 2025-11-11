@@ -23,13 +23,9 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_six", 
+  downloadButton(outputId = "download_glossary_05", 
                  label = "Download glossary", 
-                 class = "glossarysix"),
-  tags$head(
-    tags$style(".glossarysix { background-color: #0072B2; } 
-                   .glossarysix { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
   
   # Repeat the disclosure control note.
   p(br(),
@@ -71,7 +67,8 @@ tabPanel(
                      inputId = "flow_financial_year",
                      label = "Select financial year", 
                      choices = fl_financial_years, 
-                     selected = "2022/2023"
+                     # Choose default option
+                     selected = "2023/2024"
                    )
             ),
             
