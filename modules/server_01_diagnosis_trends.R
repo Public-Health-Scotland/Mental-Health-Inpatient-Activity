@@ -479,7 +479,7 @@ output$diagnoses_table <- renderDataTable({
 # We also create a download button that allows users to download the...
 # table in .csv format.
 output$download_diagnoses <- downloadHandler(
-  filename = 'diagnosis_data.csv',
+  filename = 'MHIA_diagnosis_graph_data.csv',
   content = function(file) {
     write.table(table_diagnoses(), 
                 file,
