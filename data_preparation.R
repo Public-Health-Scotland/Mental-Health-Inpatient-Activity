@@ -344,3 +344,12 @@ length_of_stay <- length_of_stay %>%
   mutate_if(is.character, as.factor) %>%
   select(Specialty, fyear, geography2, LengthOfStay, NumberOfStays) %>%
   arrange(Specialty, fyear, geography2)
+
+
+### Learning Disability Numbers Data Import ----
+
+LD_activity <- read_csv(
+  paste0("data/LD_ScotlandTrends_DataExplorer_", pub_date, ".csv"))
+
+# Save certain variables as objects, to be used as selections
+LD_measures <- LD_activity %>% distinct(measure) %>% pull(measure)
