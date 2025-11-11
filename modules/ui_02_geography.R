@@ -23,13 +23,10 @@ tabPanel(
   p("You can also download our glossary of commonly used terms in
         mental health care, which has been created to help you
         understand the information visualised in the explorer:"),
-  downloadButton(outputId = "download_glossary_three",
+  downloadButton(outputId = "download_glossary_02",
                  label = "Download glossary",
-                 class = "glossarythree"),
-  tags$head(
-    tags$style(".glossarythree { background-color: #0072B2; }
-                   .glossarythree { color: #FFFFFF; }")
-  ),
+                 class = "glossaryButton"),
+  
   
   # Repeat the standard note regarding disclosure control.
   p(br(),
@@ -91,9 +88,7 @@ tabPanel(
   # In the main panel of the geography tab, insert the geography line chart
   # the 'Show/hide table' button, and the geography table. 
   mainPanel(width = 12,
-            plotlyOutput("geography_plot", 
-                         width = "1090px",
-                         height = "600px"),
+            phs_spinner("geography_plot", "1090px", "600px"),
             br(),
             br(),
             HTML("<button data-toggle = 'collapse' href = '#geography'
