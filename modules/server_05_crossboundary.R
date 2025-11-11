@@ -204,21 +204,21 @@ output$flow_graph <- renderGvis({
 # # appearing under the diagram.
 # # Filter out NAs and discharges.
 # # Select the columns you need for the table.
-# table_flow <- reactive({
-#   flow %>% 
-#     filter(dataset %in% input$flow_dataset 
-#            & `health board of residence` %in% input$flow_board_of_residence 
-#            & year %in% input$flow_financial_year) %>%
-#     filter(complete.cases(.)) %>%
-#     filter(measure != "Number of discharges") %>%
-#     select(dataset, year, `health board of residence`, 
-#            `health board of treatment`, value)
-# })
+ table_flow <- reactive({
+   flow %>% 
+     filter(dataset %in% input$flow_dataset 
+            & `health board of residence` %in% input$flow_board_of_residence 
+            & year %in% input$flow_financial_year) %>%
+     filter(complete.cases(.)) %>%
+     filter(measure != "Number of discharges") %>%
+     select(dataset, year, `health board of residence`, 
+            `health board of treatment`, value)
+ })
 
 # Create the table that will appear under the visual.
 # Rename each column to something better.
 output$flow_table <- renderDataTable({
-  datatable(flow_new(), 
+  datatable(table_flow(), 
             style = 'bootstrap', 
             class = 'table-bordered table-condensed', 
             rownames = FALSE, 
@@ -232,10 +232,12 @@ output$flow_table <- renderDataTable({
 output$download_flow <- downloadHandler(
   filename = 'cross_boundary_flow_data.csv',
   content = function(file) {
+    #write.table(flow_new(),
     write.table(table_flow(), 
                 file, 
                 row.names = FALSE, 
-                col.names = c("Treatment specialty", "Financial year", 
+                col.names = c("Treatment specialty", 
+                              "Financial year", 
                               "Health board of residence", 
                               "Health board of treatment", 
                               "Number of patients"), 
