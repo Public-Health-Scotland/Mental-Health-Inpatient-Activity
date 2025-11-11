@@ -1,0 +1,39 @@
+/* MHIA Stylesheet
+Author: Alex Bruce
+Date: August 2024 */
+
+/* Hide Error Messages */
+.shiny-output-error {
+  visibility: hidden;
+}
+.shiny-output-error:before {
+  visibility: hidden;
+}
+
+/* Tab Ribbon colour: white */
+.tabbable > .nav > li > a { 
+  color: #000000; 
+  }
+
+/* Active Tab colours */
+.tabbable > .nav > li[class = active] > a {
+  color: #FFFFFF;
+  background-color: #0072B2;
+}
+
+/* Cross-Boundary Flow summary above graph text */
+#flow_text {
+  font-size: 15px;
+}
+
+/* Horizontal lines used as page breaks */
+/* (Used on deprivation page) */
+hr {
+  border: 1px solid #000000;
+}
+
+/* Glossary Buttons */
+.glossaryButton {
+  background-color: #0072B2;
+  color: #FFFFFF;
+}
