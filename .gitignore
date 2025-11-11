@@ -11,7 +11,6 @@
 # Folders not to upload to github
 admin/
 data/
-www/
 
 # RStudio Connect folder
 rsconnect/
