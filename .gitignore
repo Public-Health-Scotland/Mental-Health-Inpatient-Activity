@@ -12,6 +12,9 @@
 admin/
 data/
 
+# Files to avoid uploading
+*.pdf
+*.xlsx
 # RStudio Connect folder
 rsconnect/
 
