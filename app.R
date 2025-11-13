@@ -26,7 +26,7 @@ library("dplyr")#easier data manipulation
 library('purrr') # map function
 library("plotly")#data viz 
 library("DT")#for the tables under the graphs
-library("readr")#read .csv files into R
+library("readr")#read .csv and .rds files into R
 library("forcats")#for working with factors more efficiently
 library("RColorBrewer")#pre-made colour palettes
 library("googleVis")#cross-boundary flow chart (Sankey diagram)
@@ -37,7 +37,7 @@ library('shinycssloaders')
 library("shinymanager")#apply password protection to the app
 
 #* Specify publication date which is used in data file names
-pub_date <- "2024_December"
+pub_date <- "2025_December"
 
 #* Read in data prep file ----
 source('data_preparation.R', local = TRUE)
