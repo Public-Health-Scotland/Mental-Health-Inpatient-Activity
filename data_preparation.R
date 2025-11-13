@@ -3,11 +3,12 @@
 ### Diagnosis Import ----
 
 ## Import the file that will be used to create the trends in diagnoses tab.
-diagnoses <- arrow::read_parquet(
-  paste0("data/MHIA_DiagnosisTrends_DataExplorer_",pub_date,".parquet"))
+diagnoses <- read_rds(
+  paste0("data/MHIA_DiagnosisTrends_DataExplorer_",pub_date,".rds"))
 
-# diagnoses <- read_csv("SMR01_SMR04_data_by_diagnosis.csv", 
-#                       col_types = "ccccccn")
+# diagnoses <- arrow::read_parquet(
+#   paste0("data/MHIA_DiagnosisTrends_DataExplorer_",pub_date,".parquet"))
+
 
 # Round the rates to two decimal points only. This fixes the problem in the...
 # "Table" tab, where the numeric filters have too many decimal points.
@@ -50,10 +51,11 @@ diagnoses <- diagnoses %>% mutate_if(is.character, as.factor)
 # displayed in the tooltip of our interactive map.
 # 'CA' (see below) is the shapefile containing the council area polygons, ...
 # which will be projected onto a leaflet map.
-geography <- arrow::read_parquet(
-  paste0("data/MHIA_GeographyRates_DataExplorer_",pub_date,".parquet"))
+geography <- read_rds(
+  paste0("data/MHIA_GeographyRates_DataExplorer_",pub_date,".rds"))
 
-# geography <- read_csv("SMR01SMR04_geographyrates.csv", col_types = "ccccn")
+# geography <- arrow::read_parquet(
+#   paste0("data/MHIA_GeographyRates_DataExplorer_",pub_date,".parquet"))
 
 # Round the rates to two decimal points only. This fixes the problem in the...
 # "Table" tab, where the numeric filters have too many decimal points.
@@ -89,10 +91,11 @@ geography <- geography %>% mutate_if(is.character, as.factor)
 ### Age-Sex Import ----
 
 ## Import the file that will be used to create the age/sex tab.
-age_sex<- arrow::read_parquet(
-  paste0("data/MHIA_AgeSex_DataExplorer_",pub_date,".parquet"))
+age_sex<- read_rds(
+  paste0("data/MHIA_AgeSex_DataExplorer_",pub_date,".rds"))
 
-# age_sex <- read_csv("SMR01SMR04_age_sex.csv", col_types = "cccccccn")
+# age_sex<- arrow::read_parquet(
+#   paste0("data/MHIA_AgeSex_DataExplorer_",pub_date,".parquet"))
 
 # Change the text "crude rate" to just "rate".
 age_sex <- age_sex %>% 
@@ -144,10 +147,11 @@ age_sex <- age_sex %>%
 # whereas the second graph will display the Relative Index of Inequality (RII)...
 # as a trend over time.
 # We start with the file containing the quintiles, called 'deprivation'.
-deprivation<- arrow::read_parquet(
-  paste0("data/MHIA_Deprivation_DataExplorer_",pub_date,".parquet"))
+ deprivation <- read_rds(
+  paste0("data/MHIA_Deprivation_DataExplorer_",pub_date,".rds"))
 
-# deprivation <- read_csv("SMR01SMR04_deprivation.csv", col_types = "ccccccn")
+# deprivation <- arrow::read_parquet(
+#   paste0("data/MHIA_Deprivation_DataExplorer_",pub_date,".parquet"))
 
 # Change the text "crude rate" to just "rate".
 # Transform the simd variable too:
@@ -195,10 +199,11 @@ deprivation <- deprivation %>% mutate_if(is.character, as.factor)
 ### Deprivation RII Import ----
 
 ## Moving on to the second file utilised in the Deprivation tab, called 'RII'.
-RII<- arrow::read_parquet(
-  paste0("data/MHIA_RII_DataExplorer_",pub_date,".parquet"))
+RII <- read_rds(
+  paste0("data/MHIA_RII_DataExplorer_",pub_date,".rds"))
 
-# RII <- read_csv("RII_data.csv", col_types = "ccccn")
+# RII <- arrow::read_parquet(
+#   paste0("data/MHIA_RII_DataExplorer_",pub_date,".parquet"))
 
 # Transform the 'measure' variable: change the value 'Residents' to 'Hospital...
 # residents' in order to make its meaning clearer.
@@ -228,10 +233,11 @@ RII <- RII %>% mutate_if(is.character, as.factor)
 ### Crossboundary Flow Import ----
 
 ## Import the file that will be used to create the cross-boundary flow tab.
-flow<- arrow::read_parquet(
-  paste0("data/MHIA_CrossBoundaryFlow_DataExplorer_",pub_date,".parquet"))
+flow <- read_rds(
+  paste0("data/MHIA_CrossBoundaryFlow_DataExplorer_",pub_date,".rds"))
 
-# flow <- read_csv("SMR01SMR04_cross_boundary_flow.csv", col_types = "cccccnn")
+# flow <- arrow::read_parquet(
+#   paste0("data/MHIA_CrossBoundaryFlow_DataExplorer_",pub_date,".parquet"))
 
 # Save certain variables as objects, to be used as selections in the...
 # filters. 
@@ -260,10 +266,11 @@ flow <- flow %>%
 ### Readmissions Import ----
 
 ## Import the file that will be used to create the readmissions tab.
-readmissions<- arrow::read_parquet(
-  paste0("data/MHIA_Readmissions_DataExplorer_",pub_date,".parquet"))
+readmissions <- read_rds(
+  paste0("data/MHIA_Readmissions_DataExplorer_",pub_date,".rds"))
 
-# readmissions <- read_csv("SMR04_Readmissions.csv", col_types = "ccccnc")
+# readmissions <- arrow::read_parquet(
+#   paste0("data/MHIA_Readmissions_DataExplorer_",pub_date,".parquet"))
 
 # Round the rates to two decimal points only. This fixes the problem in...
 # the "Table" tab, where the numeric filters have too many decimal points.
@@ -306,11 +313,11 @@ readmissions <- readmissions %>% mutate_if(is.character, as.factor)
 # and thus duplicate entries, for each of these hospitals.
 
 
-activity_by_hospital <- arrow::read_parquet(
-  paste0("data/MHIA_DataTrends_DataExplorer_",pub_date,".parquet"))
+activity_by_hospital <- read_rds(
+  paste0("data/MHIA_DataTrends_DataExplorer_",pub_date,".rds"))
 
-# activity_by_hospital <- read_csv("SMR01SMR04_MH_trend_data_DataExplorer.csv", 
-#                                  col_types = "cccccccn")
+# activity_by_hospital <- arrow::read_parquet(
+#   paste0("data/MHIA_DataTrends_DataExplorer_",pub_date,".parquet"))
 
 activity_by_hospital <- activity_by_hospital %>%
   mutate(TrendType = recode(TrendType, 
@@ -328,11 +335,11 @@ activity_by_hospital <- activity_by_hospital %>%
 
 
 # Length of Stay Import ----
-length_of_stay <- arrow::read_parquet(
-  paste0("data/MHIA_LengthOfStay_DataExplorer_",pub_date,".parquet"))
+length_of_stay <- read_rds(
+  paste0("data/MHIA_LengthOfStay_DataExplorer_",pub_date,".rds"))
 
-# length_of_stay <- read_csv("SMR01_SMR04_length_of_stay_DataExplorer.csv", 
-#                            col_types = "ccccccn")
+# length_of_stay <- arrow::read_parquet(
+#   paste0("data/MHIA_LengthOfStay_DataExplorer_",pub_date,".parquet"))
 
 length_of_stay <- length_of_stay %>%
   mutate(LengthOfStay = recode(LengthOfStay, 
