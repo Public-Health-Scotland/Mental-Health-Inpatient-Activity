@@ -224,20 +224,3 @@ output$LD_supplement <- downloadHandler(
     file.copy("www/Learning Disabilities Outputs 1997 - 2023.xlsx", file)
   }
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
