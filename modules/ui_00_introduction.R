@@ -13,8 +13,8 @@ tabPanel(
   
   # Explain to the user what each tab visualises.
   # Each tab title is a hyperlink, linking to its respective tab.
-  p("The explorer allows you to visualise mental health inpatient
-        data in a variety of ways. Within each of the following seven
+  p("The explorer allows you to visualise mental health inpatient and day case 
+    data in a variety of ways. Within each of the following seven
         sections, there are filters that let you select the data you are
         interested in:"),
   tags$ul(
