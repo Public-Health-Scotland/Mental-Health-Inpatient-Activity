@@ -164,7 +164,7 @@ tabPanel(
         mental health care. Click the button below to download the glossary:"),
   downloadButton(outputId = "download_glossary_00",
                  label = "Download glossary",
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Provide contact details for the team.
   p(br(),

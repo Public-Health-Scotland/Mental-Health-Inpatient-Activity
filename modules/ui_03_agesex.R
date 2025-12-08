@@ -49,7 +49,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_03", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Repeat the point regarding disclosure control.
   p(br(),
@@ -113,12 +113,7 @@ tabPanel(
             column(4, 
                    downloadButton(outputId = "download_age_sex", 
                                   label = "Download as .csv", 
-                                  class = "myagesexbutton"),
-                   tags$head(
-                     tags$style(".myagesexbutton { background-color: 
-                                    #0072B2; } 
-                                    .myagesexbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   

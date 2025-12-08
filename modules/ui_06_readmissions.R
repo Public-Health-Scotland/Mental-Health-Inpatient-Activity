@@ -68,7 +68,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_06", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   #
   
@@ -139,13 +139,7 @@ tabPanel(
             column(3, 
                    downloadButton(outputId = "first_download_readmissions", 
                                   label = "Download as .csv", 
-                                  class = "myfirstreadmbutton", 
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".myfirstreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .myfirstreadmbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )),
   
   # Visualise the bar chart, the 'Show/hide table' button, and the table...
@@ -220,13 +214,7 @@ tabPanel(
             column(12, 
                    downloadButton(outputId = "second_download_readmissions", 
                                   label = "Download as .csv", 
-                                  class = "mysecondreadmbutton", 
-                                  style = "margin: 10px 0px 0px 0px"),
-                   tags$head(
-                     tags$style(".mysecondreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .mysecondreadmbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             ),
             br(),
             br(),

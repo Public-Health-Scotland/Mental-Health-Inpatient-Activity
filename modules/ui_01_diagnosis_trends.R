@@ -50,7 +50,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_01", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
  
   
   # Repeat the standard note regarding disclosure control from the...
@@ -128,12 +128,7 @@ tabPanel(
             column(4,
                    downloadButton(outputId = "download_diagnoses", 
                                   label = "Download as .csv", 
-                                  class = "mytimetrendbutton"),
-                   tags$head(
-                     tags$style(".mytimetrendbutton { background-color: 
-                                    #0072B2; } 
-                                    .mytimetrendbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   

@@ -25,7 +25,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_02",
                  label = "Download glossary",
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   
   # Repeat the standard note regarding disclosure control.
@@ -74,13 +74,7 @@ tabPanel(
             column(3,
                    downloadButton(outputId = "download_geography",
                                   label = "Download as .csv",
-                                  class = "mygeographybutton",
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".mygeographybutton { background-color:
-                                    #0072B2; }
-                                    .mygeographybutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   

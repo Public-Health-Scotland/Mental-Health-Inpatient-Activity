@@ -67,7 +67,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_04", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Repeat the disclosure control note.
   p(br(),
@@ -141,12 +141,7 @@ tabPanel(
             column(4, 
                    downloadButton(outputId = "download_deprivation", 
                                   label = "Download as .csv", 
-                                  class = "mydeprivationbutton"),
-                   tags$head(
-                     tags$style(".mydeprivationbutton { background-color: 
-                                    #0072B2; } 
-                                    .mydeprivationbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   
@@ -213,12 +208,7 @@ tabPanel(
             column(3,
                    downloadButton(outputId = "download_RII", 
                                   label = "Download as .csv", 
-                                  class = "myRIIbutton", 
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".myRIIbutton { background-color: #0072B2; } 
-                                    .myRIIbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             ),
             br(),
             br(),
