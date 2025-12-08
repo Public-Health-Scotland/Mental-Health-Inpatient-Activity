@@ -18,7 +18,7 @@ Date: August 2024 */
 /* Active Tab colours */
 .tabbable > .nav > li[class = active] > a {
   color: #FFFFFF;
-  background-color: #0072B2;
+  background-color: #12436D;
 }
 
 /* Cross-Boundary Flow summary above graph text */
@@ -34,6 +34,6 @@ hr {
 
 /* Glossary Buttons */
 .glossaryButton {
-  background-color: #0072B2;
+  background-color: #12436D;
   color: #FFFFFF;
 }
