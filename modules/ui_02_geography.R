@@ -11,7 +11,7 @@ tabPanel(
   h1("Geography", id = 'geography_top'),
   
   # Provide a description for the tab.
-  p(HTML("This section allows you to explore the rate of discharges and 
+  p(HTML("This section allows you to explore the numbers and rates of discharges and 
              patients over time, broken down by council area of residence. 
              Use the filters to visualise the data you are interested in. 
              To view the data in a table,
