@@ -124,14 +124,26 @@ tabPanel(
         target = "_blank"),
       " webpage, which contains an Excel file with completeness estimates 
         for all SMR datasets. For this release, data for the State Hospital (SMR04) 
-        was unavailable for the year 2023/24 due to issues with their systems. 
+        was unavailable for the years 2023/24 and 2024/25 due to issues with their systems. 
         A judgement has been made to 
         proceed with the publication as the lower data completeness for
         this health board has only a very minor effect on the overall data
         quality for this release and is very unlikely to affect the patterns
         of activity seen or conclusions drawn at a national level. Data 
-        presented for the year 2023/24 is 98% complete overall, well above 
+        presented for the years 2023/24 and 2024/25 are 99% and 98% complete overall, well above 
         the 90% PHS standard for recording of data."
+    )),
+  tags$ul(
+    tags$li(
+      "Please also note that ",
+      tags$a("National Records of Scotland",
+             href = "https://www.nrscotland.gov.uk/",
+             target = "_blank"),
+      " had not yet released mid-year population estimates for 2023 or 2024 due 
+      to staffing issues at the time of this publication. As a result, 2022 
+      population data was used to calculate 2023 and 2024 rates data. Future 
+      publications will therefore provide a more accurate representation of 
+      crude rate data for the 2023/24 and 2024/25 financial years."
     )),
   tags$ul(
     tags$li(
@@ -152,7 +164,7 @@ tabPanel(
         mental health care. Click the button below to download the glossary:"),
   downloadButton(outputId = "download_glossary_00",
                  label = "Download glossary",
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Provide contact details for the team.
   p(br(),

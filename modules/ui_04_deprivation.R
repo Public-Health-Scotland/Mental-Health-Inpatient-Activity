@@ -11,11 +11,23 @@ tabPanel(
   h1("Deprivation", id = 'depr_top'),
   
   # Provide a description for the tab.
-  p(HTML("This section contains two graphs, both revolving around deprivation. 
-         The <a href = '#quintile_graph_link'> first graph </a> 
-         shows inpatient activity broken down by deprivation quintile, whereas the 
-         <a href = '#RII_trend_link'> second graph </a> displays the Relative 
-         Index of Inequality (RII) as a trend over time.")),
+  p("This section contains two graphs focusing on deprivation based on ",
+    tags$a("Scottish Index of Multiple Deprivation (SIMD)",
+           href = "https://publichealthscotland.scot/resources-and-tools/health-intelligence-and-data-management/geography-population-and-deprivation-support/deprivation/scottish-index-of-multiple-deprivation-simd/",
+           target = "_blank"),
+    " quintiles. The ", tags$a("first graph", href = '#quintile_graph_link'),
+    " shows inpatient and day case activity broken down by deprivation quintile,
+    whereas the ", tags$a("second graph", href = '#RII_trend_link'), " displays the ",
+    tags$a("Relative Index of Inequality (RII)",
+           href = "https://www.scotpho.org.uk/methods-and-data/measuring-health-inequalities/#siirii",
+           target = "_blank"), 
+    "as a trend over time."),
+  
+  # p(HTML("This section contains two graphs focusing on deprivation, based on . 
+  #        The <a href = '#quintile_graph_link'> first graph </a> 
+  #        shows inpatient activity broken down by deprivation quintile, whereas the 
+  #        <a href = '#RII_trend_link'> second graph </a> displays the Relative 
+  #        Index of Inequality (RII) as a trend over time.")),
   
   p(HTML("Use the filters to visualise the data you are interested in. It is 
          possible to select multiple health boards of residence in the first graph. 
@@ -55,7 +67,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_04", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Repeat the disclosure control note.
   p(br(),
@@ -129,12 +141,7 @@ tabPanel(
             column(4, 
                    downloadButton(outputId = "download_deprivation", 
                                   label = "Download as .csv", 
-                                  class = "mydeprivationbutton"),
-                   tags$head(
-                     tags$style(".mydeprivationbutton { background-color: 
-                                    #0072B2; } 
-                                    .mydeprivationbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   
@@ -201,12 +208,7 @@ tabPanel(
             column(3,
                    downloadButton(outputId = "download_RII", 
                                   label = "Download as .csv", 
-                                  class = "myRIIbutton", 
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".myRIIbutton { background-color: #0072B2; } 
-                                    .myRIIbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             ),
             br(),
             br(),
