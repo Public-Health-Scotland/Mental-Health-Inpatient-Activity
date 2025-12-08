@@ -13,10 +13,10 @@ tabPanel(
   # Provide a description for the tab.
   p("This section presents percentage readmissions within 28 and 133 
     days after discharge.", 
-    tags$b("Please note that the methodology for this analysis has been updated 
-  in this release.")),
+    tags$b("Please note that the methodology for this analysis was updated 
+  in the previous release.")),
   p(tags$ul(
-      tags$li("In previous publications data was calculated for the most 
+      tags$li("In prior publications data was calculated for the most 
   recent financial year only and appended to previously published data 
   for previous years."),
     tags$li("The analysis now calculates the readmissions within each year 
