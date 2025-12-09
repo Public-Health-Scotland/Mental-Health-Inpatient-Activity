@@ -25,7 +25,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_05", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Repeat the disclosure control note.
   p(br(),
@@ -68,20 +68,14 @@ tabPanel(
                      label = "Select financial year", 
                      choices = fl_financial_years, 
                      # Choose default option
-                     selected = "2023/2024"
+                     selected = "2024/2025"
                    )
             ),
             
             column(3,
                    downloadButton(outputId = "download_flow", 
                                   label = "Download as .csv", 
-                                  class = "myflowbutton",
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".myflowbutton { background-color: 
-                                    #0072B2; } 
-                                    .myflowbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   

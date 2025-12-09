@@ -11,7 +11,7 @@ tabPanel(
   h1("Geography", id = 'geography_top'),
   
   # Provide a description for the tab.
-  p(HTML("This section allows you to explore the rate of discharges and 
+  p(HTML("This section allows you to explore the numbers and rates of discharges and 
              patients over time, broken down by council area of residence. 
              Use the filters to visualise the data you are interested in. 
              To view the data in a table,
@@ -25,7 +25,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_02",
                  label = "Download glossary",
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   
   # Repeat the standard note regarding disclosure control.
@@ -74,13 +74,7 @@ tabPanel(
             column(3,
                    downloadButton(outputId = "download_geography",
                                   label = "Download as .csv",
-                                  class = "mygeographybutton",
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".mygeographybutton { background-color:
-                                    #0072B2; }
-                                    .mygeographybutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )
   ),
   

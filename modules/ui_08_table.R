@@ -24,7 +24,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_08", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   # Statistical disclosure control note.
   p(br(),
@@ -63,15 +63,10 @@ tabPanel(
             column(4,
                    downloadButton(outputId = 'download_table', 
                                   label = 'Download as .csv', 
-                                  class = "mytablebutton", 
-                                  style = "margin: 25px 10px 25px 10px")
+                                  class = "phsButton")
             )
   ),
   
-  tags$head(
-    tags$style(".mytablebutton { background-color: #0072B2; } 
-                   .mytablebutton { color: #FFFFFF; }")
-  ),
   
   # Finally, insert the actual table.
   mainPanel(width = 12, 
