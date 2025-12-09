@@ -13,10 +13,13 @@ tabPanel(
   
   # Explain to the user what each tab visualises.
   # Each tab title is a hyperlink, linking to its respective tab.
-  p("The explorer allows you to visualise mental health inpatient and day case 
-    data in a variety of ways. Within each of the following seven
-        sections, there are filters that let you select the data you are
-        interested in:"),
+  p("This data explorer allows you to visualise mental health inpatient and day case 
+    data from Public Health Scotland's (PHS)",
+    tags$a("Mental Health Inpatient Activity 2025 publication",
+           href = "https://publichealthscotland.scot/publications/mental-health-inpatient-activity/mental-health-inpatient-activity-16-december-2025/",
+           target = "_blank"),
+    "in a variety of ways. Within each of the following seven sections, there 
+    are filters that let you select the data you are interested in:"),
   tags$ul(
     tags$li(
       tags$b(
