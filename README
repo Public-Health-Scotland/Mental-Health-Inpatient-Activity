@@ -1,4 +1,14 @@
-In this folder you can find the R code that was used to produce the Data explorer for PHS’s publication on Mental Health Inpatient Activity.
+# Mental Health Inpatient Activity (MHIA) Data Explorer App Code
+Code used for the data explorer app of the MHIA publication.
+
+Publication link:
+https://publichealthscotland.scot/publications/mental-health-inpatient-activity/
+
+Data analysis code:
+https://github.com/Public-Health-Scotland/MHIA-DataAnalysis
+
+Trends App code:
+https://github.com/Public-Health-Scotland/MHIA-TrendsApp
 
 The data explorer and the base files that were used to create it can be accessed via the following link (see the 'Data explorer' and 'Open Data and Data Files' sections): https://www.publichealthscotland.scot/publications/mental-health-inpatient-activity/
 
