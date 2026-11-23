@@ -279,22 +279,22 @@ readmissions <- read_rds(
 # when viewed in the "Table" tab (optional).
 readmissions <- readmissions %>%
   mutate(value = round(value, 2)) %>%
-  select(dataset, year, geography1, geography2, measure, value) %>%
-  arrange(dataset, year, desc(geography1), geography2, desc(measure), value)
+  select(dataset, fyear, treatment_location, measure, value) %>%
+  arrange(dataset, fyear, desc(treatment_location), desc(measure), value)
 
 # Save certain variables as objects, to be used as selections in the...
 # filters. 
 readm_dataset <- readmissions %>% distinct(dataset) %>% pull(dataset) 
-readm_financial_years <- readmissions %>% arrange(desc(year)) %>% 
-  distinct(year) %>% pull(year)
+readm_financial_years <- readmissions %>% arrange(desc(fyear)) %>% 
+  distinct(fyear) %>% pull(fyear)
 readm_measures <- readmissions %>% distinct(measure) %>% pull(measure)
-readm_locations <- readmissions %>% distinct(geography2) %>% pull(geography2)
+readm_locations <- readmissions %>% distinct(treatment_location) %>% pull(treatment_location)
 
 # Last step: transform all the character variables into factors.
 # The table in the "Table" tab is supposed to contain filters below the...
 # column names, to allow the users to create their own table.
 # These filters work best when the column type is factor.
-readmissions <- readmissions %>% mutate_if(is.character, as.factor) 
+readmissions <- readmissions %>% mutate_if(is.character, as.factor)
 
 
 ### Trends Data Import ----
