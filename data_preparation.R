@@ -1,8 +1,9 @@
-### SECTION 1: DATA MANIPULATION ----
+# SECTION 1: DATA MANIPULATION ----
 
-### Diagnosis Import ----
 
-## Import the file that will be used to create the trends in diagnoses tab.
+## Diagnosis Import ----
+
+### Import the diagnosis file that will be used to create the trends in diagnoses tab.
 diagnoses <- read_rds(
   paste0("data/MHIA_DiagnosisTrends_DataExplorer_",pub_date,".rds"))
 
@@ -11,12 +12,14 @@ diagnoses <- read_rds(
 
 
 # Round the rates to two decimal points only. This fixes the problem in the...
-# "Table" tab, where the numeric filters have too many decimal points.
+# "Table" tab, where the numeric filters have too many decimal points. The same for all data below.
 # Change the text "crude rate" to just "rate".
 # Then, use the select() command to change the order of columns in the dataset.
 # Also, sort the tibble in a way that makes it a bit more readable when...
 # viewed in the "Table" tab (optional).
-diagnoses <- diagnoses %>% mutate(value = round(value, 2)) %>%
+diagnoses <- diagnoses %>% 
+  # Round to avoid problems in table tab caused by too many decimal places
+  mutate(value = round(value, 2)) %>%
   mutate(measure = recode(measure, 
                           "Crude rate of patients (per 100,000 population)" = 
                             "Rate of patients (per 100,000 population)", 
@@ -29,41 +32,31 @@ diagnoses <- diagnoses %>% mutate(value = round(value, 2)) %>%
   arrange(dataset, year, desc(geography1), geography2, diagnosis_groupings, 
           desc(measure), value)
 
-# Save certain variables as objects, to be used as selections in the...
-# filters. 
+
+# Save certain variables as objects, to be used as selections in the filters
 diag_dataset <- diagnoses %>% distinct(dataset) %>% pull(dataset)
 diag_location_types <- diagnoses %>% distinct(geography1) %>% pull(geography1)
 diag_diagnosis_groupings <- diagnoses %>% distinct(diagnosis_groupings) %>% 
   pull(diagnosis_groupings)
 diag_measures <- diagnoses %>% distinct(measure) %>% pull(measure)
 
+
 # Finally, transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
+# The table in the "Table" tab is supposed to contain filters below the 
 # column names, to allow the users to create their own table.
 # These filters work best when the column type is factor.
 diagnoses <- diagnoses %>% mutate_if(is.character, as.factor)
 
 
-### Geography Import ----
 
-## Import the two files that will be used to create the geography tab.
-# 'geography' contains the rates of patients/discharges that will be...
-# displayed in the tooltip of our interactive map.
-# 'CA' (see below) is the shapefile containing the council area polygons, ...
-# which will be projected onto a leaflet map.
+## Geography Import ----
+
 geography <- read_rds(
   paste0("data/MHIA_GeographyRates_DataExplorer_",pub_date,".rds"))
 
-# geography <- arrow::read_parquet(
-#   paste0("data/MHIA_GeographyRates_DataExplorer_",pub_date,".parquet"))
-
-# Round the rates to two decimal points only. This fixes the problem in the...
-# "Table" tab, where the numeric filters have too many decimal points.
-# Change the text "crude rate" to just "rate".
-# Then, use the select() command to change the order of columns in the dataset.
-# Also, sort the tibble in a way that makes it a bit more readable when...
-# viewed in the "Table" tab (optional).
-geography <- geography %>% mutate(Value = round(Value, 2)) %>% 
+geography <- geography %>% 
+  # Round to avoid problems in table tab caused by too many decimal places
+  mutate(Value = round(Value, 2)) %>% 
   mutate(measure = recode(measure, 
                           "Crude rate of patients (per 100,000 population)" = 
                             "Rate of patients (per 100,000 population)", 
@@ -72,32 +65,27 @@ geography <- geography %>% mutate(Value = round(Value, 2)) %>%
   select(dataset, fyear, ca, measure, Value) %>%
   arrange(dataset, fyear, ca, desc(measure), Value) 
 
-# Save certain variables as objects, to be used as selections in the...
-# filters. 
+
+# Save certain variables as objects, to be used as selections in the filters
 geography_dataset <- geography %>% distinct(dataset) %>% pull(dataset) 
 geography_measures <- geography %>% distinct(measure) %>% pull(measure)
-#geography_locations <- geography %>% distinct(ca) %>% pull(ca)
-## Potentially remove if not used
 geography_fin_years <- geography %>% arrange(desc(fyear)) %>% distinct(fyear) %>% 
   pull(fyear)
 
-# Finally, transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
+
+# Transform all character variables to factors so that table filters work properly
 geography <- geography %>% mutate_if(is.character, as.factor)
 
 
-### Age-Sex Import ----
 
-## Import the file that will be used to create the age/sex tab.
+## Age-Sex Import ----
+
+# Import the file that will be used to create the age/sex tab
 age_sex<- read_rds(
   paste0("data/MHIA_AgeSex_DataExplorer_",pub_date,".rds"))
 
-# age_sex<- arrow::read_parquet(
-#   paste0("data/MHIA_AgeSex_DataExplorer_",pub_date,".parquet"))
 
-# Change the text "crude rate" to just "rate".
+# Change the text "crude rate" to just "rate"
 age_sex <- age_sex %>% 
   mutate(measure = recode(measure, 
                           "Crude rate of patients (per 100,000 population)" = 
@@ -105,8 +93,8 @@ age_sex <- age_sex %>%
                           "Crude rate of discharges (per 100,000 population)" = 
                             "Rate of discharges (per 100,000 population)"))  
 
-# Save certain variables as objects, to be used as selections in the...
-# filters.  
+
+# Save certain variables as objects, to be used as selections in the filters
 as_dataset <- age_sex %>% arrange(dataset) %>% distinct(dataset) %>% 
   pull(dataset)
 as_location_types <- age_sex %>% arrange(desc(geography1)) %>% 
@@ -116,22 +104,18 @@ as_financial_years <- age_sex %>% arrange(desc(year)) %>% distinct(year) %>%
 as_measures <- age_sex %>% arrange(desc(measure)) %>% distinct(measure) %>% 
   pull(measure)
 
-# Transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
-# Then, round the rates to two decimal points only. This fixes the problem in...
-# the "Table" tab, where the numeric filters have too many decimal points.
-# Next step: reverse the order of levels in the factor "sex_char".
-# We want males to be first and females second, so that the legend in the age/...
-# sex pyramid is consistent with what the pyramid shows (males are visualised...
+
+# With this data we need to reverse the order of levels in the factor "sex_char".
+# We want males to be first and females second, so that the legend in the age/sex
+# pyramid is consistent with what the pyramid shows (males are visualised
 # first, and females second).
-# Finally, use the select() command to change the order of columns in the...
-# dataset, and then sort the tibble in a way that makes it a bit more...
-# readable when viewed in the "Table" tab (optional).
+
 age_sex <- age_sex %>% 
+  # Transform all character variables to factors so that table filters work properly
   mutate_if(is.character, as.factor) %>% 
+  # Round to avoid problems in table tab caused by too many decimal places
   mutate(value = round(value, 2)) %>%
+  # Reverse the order of levels in the factor "sex_char"
   mutate(sex_char = fct_rev(sex_char)) %>% 
   select(dataset, year, geography1, geography2, ageband, sex_char, measure, 
          value) %>% 
@@ -139,30 +123,25 @@ age_sex <- age_sex %>%
           sex_char, value)
 
 
-### Deprivation Import ----
+
+## Deprivation Import ----
 
 ## Import the files that will be used to create the deprivation tab.
 # The deprivation tab will contain two graphs.
-# The first graph will show activity broken down by deprivation quintile,...
-# whereas the second graph will display the Relative Index of Inequality (RII)...
+# The first graph will show activity broken down by deprivation quintile,
+# whereas the second graph will display the Relative Index of Inequality (RII)
 # as a trend over time.
 # We start with the file containing the quintiles, called 'deprivation'.
+
  deprivation <- read_rds(
   paste0("data/MHIA_Deprivation_DataExplorer_",pub_date,".rds"))
 
-# deprivation <- arrow::read_parquet(
-#   paste0("data/MHIA_Deprivation_DataExplorer_",pub_date,".parquet"))
 
 # Change the text "crude rate" to just "rate".
 # Transform the simd variable too:
 # Recode value "1" to "1 - Most deprived" and "5" to "5 - Least deprived".
-# This will make the first graph as well as the table under it...
-# easier to understand.
-# Then, round the rates to two decimal points only. This fixes the problem in...
-# the "Table" tab, where the numeric filters have too many decimal points.
-# Finally, use the select() command to change the order of columns in the...
-# dataset, and then sort the tibble in a way that makes it a bit more...
-# readable when viewed in the "Table" tab (optional).
+# This will make the first graph as well as the table under it easier to understand.
+
 deprivation <- deprivation %>%
   mutate(measure = recode(measure, 
                           "Crude rate of patients (per 100,000 population)" = 
@@ -175,72 +154,61 @@ deprivation <- deprivation %>%
                        "2" = "2",
                        "3" = "3",
                        "4" = "4",
-                       "5" = "5 - Least deprived")) %>% 
+                       "5" = "5 - Least deprived")) %>%
+  # Round to avoid problems in table tab caused by too many decimal places
   mutate(value = round(value, 2)) %>% 
   select(dataset, year, geography1, geography2, simd, measure, value) %>%
   arrange(dataset, year, desc(geography1), simd, geography2, desc(measure), 
           value)
 
-# Save certain variables as objects, to be used as selections in the...
-# filters over the first graph. 
+
+# Save certain variables as objects, to be used as selections in the filters
 depr_dataset <- deprivation %>% distinct(dataset) %>% pull(dataset)
 depr_location_types <- deprivation %>% distinct(geography1) %>% pull(geography1)
 depr_financial_years <- deprivation %>% arrange(desc(year)) %>%
   distinct(year) %>% pull(year)
 depr_measures <- deprivation %>% distinct(measure) %>% pull(measure)
 
-# Last step: transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
+
+# Transform all character variables to factors so that table filters work properly
 deprivation <- deprivation %>% mutate_if(is.character, as.factor)
 
 
-### Deprivation RII Import ----
+
+## Deprivation RII Import ----
 
 ## Moving on to the second file utilised in the Deprivation tab, called 'RII'.
 RII <- read_rds(
   paste0("data/MHIA_RII_DataExplorer_",pub_date,".rds"))
 
-# RII <- arrow::read_parquet(
-#   paste0("data/MHIA_RII_DataExplorer_",pub_date,".parquet"))
-
 # Transform the 'measure' variable: change the value 'Residents' to 'Hospital...
 # residents' in order to make its meaning clearer.
-# Also, round the rates to two decimal points only. This fixes the problem in...
-# the "Table" tab, where the numeric filters have too many decimal points.
-# Finally, use the select() command to change the order of columns in the...
-# dataset, and then sort the tibble in a way that makes it a bit more...
-# readable when viewed in the "Table" tab (optional).
 RII <- RII %>%
   mutate(measure = recode(measure, "Residents" = "Hospital residents")) %>% 
+  # Round to avoid problems in table tab caused by too many decimal places
   mutate(value = round(value, 2)) %>% 
   select(dataset, year, geography1, measure, value) %>%
   arrange(dataset, year, geography1, desc(measure), value)
 
-# Save certain variables as objects, to be used as selections in the...
-# filters over the second graph. 
+
+# Save certain variables as objects, to be used as selections in the filters
 RII_dataset <- RII %>% distinct(dataset) %>% pull(dataset)
 RII_measures <- RII %>% distinct(measure) %>% pull(measure)
 
-# Last step: transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
+
+# Transform all character variables to factors so that table filters work properly
 RII <- RII %>% mutate_if(is.character, as.factor)
 
 
-### Crossboundary Flow Import ----
+
+## Crossboundary Flow Import ----
 
 ## Import the file that will be used to create the cross-boundary flow tab.
 flow <- read_rds(
   paste0("data/MHIA_CrossBoundaryFlow_DataExplorer_",pub_date,".rds"))
 
-# flow <- arrow::read_parquet(
-#   paste0("data/MHIA_CrossBoundaryFlow_DataExplorer_",pub_date,".parquet"))
 
-# Save certain variables as objects, to be used as selections in the...
-# filters. 
+# Save certain variables as objects, to be used as selections in the filters
 fl_dataset <- flow %>% arrange(dataset) %>% distinct(dataset) %>% 
   pull(dataset)
 fl_boards_of_residence <- flow %>% distinct(`health board of residence`) %>% 
@@ -248,78 +216,55 @@ fl_boards_of_residence <- flow %>% distinct(`health board of residence`) %>%
 fl_financial_years <- flow %>% arrange(desc(year)) %>% distinct(year) %>% 
   pull(year)
 
-# Use the select() command to change the order of columns in the dataset, and...
-# then sort the tibble in a way that makes it a bit more readable when...
-# viewed in the "Table" tab (optional).
-# Also, transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
+
 flow <- flow %>% 
   select(dataset, year, `health board of residence`, 
          `health board of treatment`, flow, measure, value) %>%
   arrange(dataset, year, `health board of residence`, 
           `health board of treatment`, flow, desc(measure), value) %>%
+  # Transform all character variables to factors so that table filters work properly
   mutate_if(is.character, as.factor) 
 
 
-### Readmissions Import ----
 
-## Import the file that will be used to create the readmissions tab.
+## Readmissions Import ----
+
+# Import the file that will be used to create the readmissions tab.
 readmissions <- read_rds(
   paste0("data/MHIA_Readmissions_DataExplorer_",pub_date,".rds"))
 
-# readmissions <- arrow::read_parquet(
-#   paste0("data/MHIA_Readmissions_DataExplorer_",pub_date,".parquet"))
 
-# Round the rates to two decimal points only. This fixes the problem in...
-# the "Table" tab, where the numeric filters have too many decimal points.
-# Then, use the select() command to change the order of columns in the dataset.
-# Finally, sort the tibble in a way that makes it a bit more readable...
-# when viewed in the "Table" tab (optional).
 readmissions <- readmissions %>%
+  # Round to avoid problems in table tab caused by too many decimal places
   mutate(value = round(value, 2)) %>%
   select(dataset, fyear, treatment_location, measure, value) %>%
   arrange(dataset, fyear, desc(treatment_location), desc(measure), value)
 
-# Save certain variables as objects, to be used as selections in the...
-# filters. 
+
+# Save certain variables as objects, to be used as selections in the filters
 readm_dataset <- readmissions %>% distinct(dataset) %>% pull(dataset) 
 readm_financial_years <- readmissions %>% arrange(desc(fyear)) %>% 
   distinct(fyear) %>% pull(fyear)
 readm_measures <- readmissions %>% distinct(measure) %>% pull(measure)
 readm_locations <- readmissions %>% distinct(treatment_location) %>% pull(treatment_location)
 
-# Last step: transform all the character variables into factors.
-# The table in the "Table" tab is supposed to contain filters below the...
-# column names, to allow the users to create their own table.
-# These filters work best when the column type is factor.
+# Transform all character variables to factors so that table filters work properly
 readmissions <- readmissions %>% mutate_if(is.character, as.factor)
 
 
-### Trends Data Import ----
 
-## In the 'Table' tab, in addition to the data explorer files, we will be...
-# visualising the two files from the 'Trend data' page.
+## Trends App Data Import ----
 
-# Import these two files: 1) activity by hospital, and 2) length of stay.
-# Once they have been imported, we a) do some basic recoding, b) transform all...
-# character variables into factors, and c) filter out the columns we don't need.
-# We can also reorder the columns (with select()) and sort the datasets...
-# (with arrange()) more optimally.
-# For the activity by hospital file, we also filter out Golden Jubilee and the...
-# State Hospitals Board as these are alternative names for the National Waiting...
-# Times Centre and the State Hospital respectively. No need to have two names, ...
-# and thus duplicate entries, for each of these hospitals.
+### In the 'Table' tab, in addition to the data explorer files, we will be
+# displaying data from the 'Trend data' app.
 
-
+### Trends data import ----
 activity_by_hospital <- read_rds(
   paste0("data/MHIA_DataTrends_DataExplorer_",pub_date,".rds"))
 
-# activity_by_hospital <- arrow::read_parquet(
-#   paste0("data/MHIA_DataTrends_DataExplorer_",pub_date,".parquet"))
 
 activity_by_hospital <- activity_by_hospital %>%
+  # Recode names from var names into proper English
   mutate(TrendType = recode(TrendType, 
                             "HospitalResidents" = "Number of hospital residents", 
                             "Admissions" = "Number of admissions", 
@@ -327,19 +272,21 @@ activity_by_hospital <- activity_by_hospital %>%
                             "Stays" = "Number of stays", 
                             "Patients" = "Number of patients")) %>%
   mutate(Specialty = recode(Specialty, "NonPsychiatric" = "Non-psychiatric")) %>% 
+  # Remove Golden Jubilee and the State Hospitals Board as these are alternative 
+  # names for the National Waiting Times Centre and the State Hospital respectively. 
+  # No need to have two names, and thus duplicate entries, for each of these hospitals.
   filter(hospital_name != "Golden Jubilee National Hospital") %>% 
   filter(hospital_name != "The State Hospitals Board for Scotland") %>%
+  # Transform all character variables to factors so that table filters work properly
   mutate_if(is.character, as.factor) %>%
   select(Specialty, year, hbtreat_name, hospital_name, TrendType, Value) %>%
   arrange(Specialty, year, hbtreat_name, hospital_name, TrendType)
 
 
-# Length of Stay Import ----
+### Length of Stay Import ----
 length_of_stay <- read_rds(
   paste0("data/MHIA_LengthOfStay_DataExplorer_",pub_date,".rds"))
 
-# length_of_stay <- arrow::read_parquet(
-#   paste0("data/MHIA_LengthOfStay_DataExplorer_",pub_date,".parquet"))
 
 length_of_stay <- length_of_stay %>%
   mutate(LengthOfStay = recode(LengthOfStay, 
@@ -353,10 +300,11 @@ length_of_stay <- length_of_stay %>%
   arrange(Specialty, fyear, geography2)
 
 
-### Learning Disability Numbers Data Import ----
+
+## Learning Disabilities Data Import ----
 
 LD_activity <- read_csv(
   paste0("data/LD_ScotlandTrends_DataExplorer_", pub_date, ".csv"))
 
-# Save certain variables as objects, to be used as selections
+# Save certain variables as objects, to be used as selections in filters
 LD_measures <- LD_activity %>% distinct(measure) %>% pull(measure)
