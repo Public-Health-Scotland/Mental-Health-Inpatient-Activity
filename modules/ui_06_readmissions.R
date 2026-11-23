@@ -123,7 +123,7 @@ tabPanel(
                      inputId = "readmissions_financial_year",
                      label = "Select financial year", 
                      choices = readm_financial_years, 
-                     selected = "2024/2025"
+                     selected = "2025/2026"
                    )
             ),
             
@@ -132,7 +132,7 @@ tabPanel(
                      inputId = "readmissions_measure_type",
                      label = "Select measure",
                      choices = readm_measures, 
-                     selected = "Percentage readmissions within 28 days"
+                     selected = "Readmissions within 28 days (%)"
                    )
             ),
             
@@ -207,7 +207,7 @@ tabPanel(
                      inputId = "readmissions_measure_type_two",
                      label = "Select measure",
                      choices = readm_measures, 
-                     selected = "Percentage readmissions within 28 days"
+                     selected = "Readmissions within 28 days (%)"
                    )
             ),
             
