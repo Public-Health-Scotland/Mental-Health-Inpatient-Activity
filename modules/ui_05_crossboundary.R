@@ -68,7 +68,7 @@ tabPanel(
                      label = "Select financial year", 
                      choices = fl_financial_years, 
                      # Choose default option
-                     selected = "2024/2025"
+                     selected = "2025/2026"
                    )
             ),
             
