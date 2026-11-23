@@ -3,7 +3,7 @@
 # This tab will have two charts: one bar chart and one line chart.
 # They both utilise the same dataset.
 # The bar chart allows you to compare the readmission percentages of...
-# multiple HBs in a single year, whereas the line chart shows you a time...
+# multiple HBs in a single fyear, whereas the line chart shows you a time...
 # trend of the readmission percentages of a single HB (or multiple HBs, but...
 # that's up to the user).
 # Both graphs allow the user to compare the HB percentage against the...
@@ -15,7 +15,7 @@
 # SELECT FINANCIAL YEAR and SELECT MEASURE.
 readm_bar_chart_subset <- reactive({
   readmissions %>% 
-    filter(year %in% input$readmissions_financial_year 
+    filter(fyear %in% input$readmissions_financial_year 
            & measure %in% input$readmissions_measure_type)
 })
 
@@ -33,26 +33,29 @@ output$readm_bar_chart <- renderPlotly({
                                     readm_bar_chart_subset()$dataset,
                                     "<br>",
                                     "Financial year: ",
-                                    readm_bar_chart_subset()$year, 
+                                    readm_bar_chart_subset()$fyear, 
                                     "<br>",
                                     "Location of treatment: ", 
-                                    readm_bar_chart_subset()$geography2, 
+                                    readm_bar_chart_subset()$treatment_location, 
                                     "<br>",
                                     input$readmissions_measure_type, ": ",
                                     readm_bar_chart_subset()$value)
   
   plot_ly(data = readm_bar_chart_subset(),
           
-          # Choose your x (geography2), y (value), and grouping (geography2)...
+          # Choose your x (treatment_location), y (value), and grouping (treatment_location)...
           # variables.
-          x = ~geography2, y = ~value, color = ~geography2, 
-          
-          # Choose colours for the bars.
-          # We need to repeat the hexadecimal code for light blue 12 times,...
-          # as there are 12 health boards here, and then we specify dark...
-          # blue for Scotland.
-          colors = c(rep("#4CBEED", 12), "#004785"), 
-          text = tooltip_readm_bar_chart, hoverinfo = "text",
+          x = ~treatment_location, 
+          y = ~value,
+          # Set bar colours, with the Scotland bar as a distinct colour
+          marker = list(
+            color = ifelse(
+              readm_bar_chart_subset()$treatment_location == "Scotland",
+              "#004785",
+              "#4CBEED"
+            )
+          ),
+          hovertext = tooltip_readm_bar_chart, hoverinfo = "text",
           
           # Choose your chart type, in this case a bar chart, and set the...
           # width and height of the chart.
@@ -92,9 +95,9 @@ output$readm_bar_chart <- renderPlotly({
              title = paste0(c(
                rep("&nbsp;", 20),
                if(input$readmissions_measure_type == 
-                  "Percentage readmissions within 28 days")
-               {print(c("% readmissions within 28d"))}
-               else{print(c("% readmissions within 133d"))},
+                  "Readmissions within 28 days (%)")
+               {print(c("Readmissions within 28 days (%)"))}
+               else{print(c("Readmissions within 133 days (%)"))},
                rep("&nbsp;", 20),
                rep("\n&nbsp;", 3)
              ),
@@ -144,10 +147,10 @@ output$readm_bar_chart <- renderPlotly({
 # data however you like (optional).
 first_table_readm <- reactive({
   readmissions %>% 
-    filter(year %in% input$readmissions_financial_year 
+    filter(fyear %in% input$readmissions_financial_year 
            & measure %in% input$readmissions_measure_type) %>% 
-    select(dataset, year, geography2, value) %>%
-    arrange(year, geography2)
+    select(dataset, fyear, treatment_location, value) %>%
+    arrange(fyear, treatment_location)
 })
 
 # Create the actual table using the subset above.
@@ -184,7 +187,7 @@ output$first_download_readmissions <- downloadHandler(
 # because, in the graph, we will be matching colours to factor levels.
 readm_line_chart_subset <- reactive({
   readmissions %>% 
-    filter(geography2 %in% input$readmissions_location 
+    filter(treatment_location %in% input$readmissions_location 
            & measure %in% input$readmissions_measure_type_two) %>%
     droplevels
 })
@@ -203,10 +206,10 @@ output$readm_line_chart <- renderPlotly({
                                      readm_line_chart_subset()$dataset,
                                      "<br>", 
                                      "Financial year: ",
-                                     readm_line_chart_subset()$year, 
+                                     readm_line_chart_subset()$fyear, 
                                      "<br>", 
                                      "Location of treatment: ", 
-                                     readm_line_chart_subset()$geography2, 
+                                     readm_line_chart_subset()$treatment_location, 
                                      "<br>",
                                      input$readmissions_measure_type_two, ": ",
                                      readm_line_chart_subset()$value)
@@ -214,7 +217,7 @@ output$readm_line_chart <- renderPlotly({
   plot_ly(data = readm_line_chart_subset(),
           
           # Choose your x, y, and grouping variables.
-          x = ~year, y = ~value, color = ~geography2, 
+          x = ~fyear, y = ~value, color = ~treatment_location, 
           
           # Assign a colour to each location of treatment.
           # The user can select a maximum of four health boards, so we...
@@ -238,11 +241,11 @@ output$readm_line_chart <- renderPlotly({
           # symbols (see below), so in the end, it will be clear which line...
           # corresponds to which HB.
           line = list(width = 3),
-          linetype = ~geography2,
+          linetype = ~treatment_location,
           linetypes = c("solid", "solid", "dot", "dot"),
           
           # Set the symbols for the health boards. 
-          symbol = ~geography2, 
+          symbol = ~treatment_location, 
           symbols = c("square-open", "x", "circle", "diamond"),
           
           # Set the width and height of the graph.
@@ -251,7 +254,7 @@ output$readm_line_chart <- renderPlotly({
           # characters are visualised per line. This is meant to deal with...
           # boards with long names, like NHS Greater Glasgow & Clyde.
           width = 1000, height = 600, 
-          name = ~str_wrap(geography2, 10)) %>%
+          name = ~str_wrap(treatment_location, 10)) %>%
     
     # Write the title of the graph.
     layout(title = paste0("<b>", 
@@ -259,9 +262,9 @@ output$readm_line_chart <- renderPlotly({
                           " for psychiatric specialties",
                           "<br>",              
                           "in the period ",
-                          first(as.vector(readm_line_chart_subset()$year)), 
+                          first(as.vector(readm_line_chart_subset()$fyear)), 
                           " - ", 
-                          last(as.vector(readm_line_chart_subset()$year)),
+                          last(as.vector(readm_line_chart_subset()$fyear)),
                           ", by financial year and location of treatment",
                           "</b>"),
            separators = ".",
@@ -339,10 +342,10 @@ output$readm_line_chart <- renderPlotly({
 # you like (optional).
 second_table_readm <- reactive({
   readmissions %>% 
-    filter(geography2 %in% input$readmissions_location 
+    filter(treatment_location %in% input$readmissions_location 
            & measure %in% input$readmissions_measure_type_two) %>% 
-    select(dataset, year, geography2, value) %>%
-    arrange(year, geography2)
+    select(dataset, fyear, treatment_location, value) %>%
+    arrange(fyear, treatment_location)
 })
 
 # Create the actual table.
