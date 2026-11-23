@@ -55,7 +55,7 @@ credentials <- readRDS("admin/credentials.rds")
 # Create the fluidPage that will house the data explorer. 
 
 ui <- 
-  secure_app( # If password protection is needed.
+  # secure_app( # If password protection is needed.
   fluidPage(
   
   ## load the CSS stylesheet that defines how things look 
@@ -93,23 +93,23 @@ ui <-
 
 ) # End of ui fluid page.
 
-) # End of password-protection.
+# ) # End of password-protection.
 
 
 ### SECTION 3: SERVER ----
 
 server <- function(input, output, session) {
   
-  # * Shinymanager authorisation ----
-  # Uncomment this section to password protect the app.
-  # Re-comment out to remove password protection on launch day.
-  res_auth <- secure_server(
-  check_credentials = check_credentials(credentials)
-  )
-
-  output$auth_output <- renderPrint({
-  reactiveValuesToList(res_auth)
-  })
+  # # * Shinymanager authorisation ----
+  # # Uncomment this section to password protect the app.
+  # # Re-comment out to remove password protection on launch day.
+  # res_auth <- secure_server(
+  # check_credentials = check_credentials(credentials)
+  # )
+  # 
+  # output$auth_output <- renderPrint({
+  # reactiveValuesToList(res_auth)
+  # })
   
   ##* ObserveEvent() commands ----
   
