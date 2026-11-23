@@ -37,7 +37,7 @@ library('shinycssloaders')
 library("shinymanager")#apply password protection to the app
 
 #* Specify publication date which is used in data file names
-pub_date <- "2025_December"
+pub_date <- "2026_December"
 
 #* Read in data prep file ----
 source('data_preparation.R', local = TRUE)
