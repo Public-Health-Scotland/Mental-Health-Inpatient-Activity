@@ -45,18 +45,16 @@ output$geography_plot <- renderPlotly({
     # E.g.:
     # "Treatment specialty: Non-psychiatric"
     # "Financial year: 2019/2020"
-    # "Location of treatment: Scotland"
+    # "Location of residence: Scotland"
     # "Diagnosis grouping: Disorders of adult behaviour and personality"
     # "Number of discharges: XXXX"
     tooltip_geography <- paste0("Treatment specialty: ",
                                 geography_new()$dataset, "<br>",
-                                "Financial year: ", 
+                                "Financial year: ",
                                 geography_new()$fyear, "<br>",
-                                # "Council area of residence: ", 
-                                # geography_new()$ca, "<br>",
-                                "Location: ", "<br>",
-                                # geography_new()$diagnosis_groupings, "<br>",
-                                input$geography_measure_input, ": ", 
+                                "Area of residence: ",
+                                geography_new()$ca, "<br>",
+                                input$geography_measure_input, ": ",
                                 geography_new()$Value)
     
     # Create the main body of the chart.

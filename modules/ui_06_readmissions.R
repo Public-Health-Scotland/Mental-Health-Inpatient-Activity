@@ -13,10 +13,10 @@ tabPanel(
   # Provide a description for the tab.
   p("This section presents percentage readmissions within 28 and 133 
     days after discharge.", 
-    tags$b("Please note that the methodology for this analysis has been updated 
-  in this release.")),
+    tags$b("Please note that the methodology for this analysis was updated 
+  in the previous release.")),
   p(tags$ul(
-      tags$li("In previous publications data was calculated for the most 
+      tags$li("In prior publications data was calculated for the most 
   recent financial year only and appended to previously published data 
   for previous years."),
     tags$li("The analysis now calculates the readmissions within each year 
@@ -68,7 +68,7 @@ tabPanel(
         understand the information visualised in the explorer:"),
   downloadButton(outputId = "download_glossary_06", 
                  label = "Download glossary", 
-                 class = "glossaryButton"),
+                 class = "phsButton"),
   
   #
   
@@ -123,7 +123,7 @@ tabPanel(
                      inputId = "readmissions_financial_year",
                      label = "Select financial year", 
                      choices = readm_financial_years, 
-                     selected = "2023/2024"
+                     selected = "2024/2025"
                    )
             ),
             
@@ -139,13 +139,7 @@ tabPanel(
             column(3, 
                    downloadButton(outputId = "first_download_readmissions", 
                                   label = "Download as .csv", 
-                                  class = "myfirstreadmbutton", 
-                                  style = "margin: 25px 10px 25px 10px"),
-                   tags$head(
-                     tags$style(".myfirstreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .myfirstreadmbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             )),
   
   # Visualise the bar chart, the 'Show/hide table' button, and the table...
@@ -220,13 +214,7 @@ tabPanel(
             column(12, 
                    downloadButton(outputId = "second_download_readmissions", 
                                   label = "Download as .csv", 
-                                  class = "mysecondreadmbutton", 
-                                  style = "margin: 10px 0px 0px 0px"),
-                   tags$head(
-                     tags$style(".mysecondreadmbutton { background-color: 
-                                    #0072B2; } 
-                                    .mysecondreadmbutton { color: #FFFFFF; }")
-                   )
+                                  class = "phsButton")
             ),
             br(),
             br(),
