@@ -279,8 +279,8 @@ activity_by_hospital <- activity_by_hospital %>%
   filter(hospital_name != "The State Hospitals Board for Scotland") %>%
   # Transform all character variables to factors so that table filters work properly
   mutate_if(is.character, as.factor) %>%
-  select(Specialty, year, hbtreat_name, hospital_name, TrendType, Value) %>%
-  arrange(Specialty, year, hbtreat_name, hospital_name, TrendType)
+  select(Specialty, fyear, hbtreat_name, hospital_name, TrendType, Value) %>%
+  arrange(Specialty, fyear, hbtreat_name, hospital_name, TrendType)
 
 
 ### Length of Stay Import ----
