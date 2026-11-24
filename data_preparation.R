@@ -295,6 +295,7 @@ length_of_stay <- length_of_stay %>%
                                "1 - 7 days" = "1 to 7 days", 
                                "29 days - 6 months" = "29 days to 6 months", 
                                "8 - 28 days" = "8 to 28 days")) %>% 
+  # Transform all character variables to factors so that table filters work properly
   mutate_if(is.character, as.factor) %>%
   select(Specialty, fyear, geography2, LengthOfStay, NumberOfStays) %>%
   arrange(Specialty, fyear, geography2)

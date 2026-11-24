@@ -123,7 +123,7 @@ tabPanel(
                      inputId = "readmissions_financial_year",
                      label = "Select financial year", 
                      choices = readm_financial_years, 
-                     selected = "2025/2026"
+                     selected = max_fyear
                    )
             ),
             

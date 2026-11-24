@@ -1,7 +1,8 @@
 # Name: Data explorer
 # Update Author: Alex Bruce
-# Modified: 26/09/2023
+# Modified: Nov 2026
 # Type: Data visualisation
+# Comfirmed working on: R 4.5.1
 #
 # Major rework: May 2024
 # Author: Alex Bruce
@@ -12,10 +13,7 @@
 # - accessibility improvements
 # 
 # Original Author: Nikos Alexandrou
-# Written on: RStudio
-# Written for: R version 3.6.1
-# Output: Shiny application
-# Approximate run time: < 1 minute
+#
 # Description: This syntax creates a Shiny application that allows the...
 # user to visualise mental health data in a variety of ways.
 
@@ -39,6 +37,12 @@ library("shinymanager")#apply password protection to the app
 #* Specify publication date which is used in data file names
 pub_date <- "2026_December"
 
+#* Define max fin year for use in graph selectors as default option
+max_fyear <- paste0(
+  as.numeric(substr(pub_date,1,4)) - 1,
+  "/",
+  substr(pub_date,1,4))
+
 #* Read in data prep file ----
 source('data_preparation.R', local = TRUE)
 
@@ -55,7 +59,9 @@ credentials <- readRDS("admin/credentials.rds")
 # Create the fluidPage that will house the data explorer. 
 
 ui <- 
-  # secure_app( # If password protection is needed.
+  ## Begining of password protection ui ----
+  # secure_app( # Uncomment if password protection is needed.
+
   fluidPage(
   
   ## load the CSS stylesheet that defines how things look 
@@ -93,7 +99,8 @@ ui <-
 
 ) # End of ui fluid page.
 
-# ) # End of password-protection.
+## End of password-protection ui ----
+# ) # Uncomment if password-protection required
 
 
 ### SECTION 3: SERVER ----
